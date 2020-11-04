@@ -1,0 +1,35 @@
+<div
+  class="header"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayout.gt-sm="row"
+  fxLayoutAlign.gt-sm="space-between center"
+>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon> contact_phone </mat-icon>
+    <span class="titulo"> Suporte </span>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-title>EasyWaiter</mat-card-title>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-subtitle>(49) 3621-9999</mat-card-subtitle>
+    </div>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Mensagem</mat-label>
+      <textarea matInput #message maxlength="256" placeholder="Ex. Eu preciso de ajuda em..."></textarea>
+      <mat-hint align="end">{{ message.value.length }} / 256</mat-hint>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-raised-button (click)="enviar()">
+        <span>Enviar</span>
+      </button>
+    </div>
+  </mat-card>
+</div>

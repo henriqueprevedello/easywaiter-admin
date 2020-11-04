@@ -22,6 +22,8 @@ import { ProdutoComponent } from './produto/produto.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import { EstabelecimentoComponent } from './estabelecimento/estabelecimento.component';
+import { ListagemComandasComponent } from './listagem-comandas/listagem-comandas.component';
+import { SuporteComponent } from './suporte/suporte.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { EstabelecimentoComponent } from './estabelecimento/estabelecimento.comp
     ListagemProdutosComponent,
     ProdutoComponent,
     EstabelecimentoComponent,
+    ListagemComandasComponent,
+    SuporteComponent,
   ],
   imports: [
     CommonModule,

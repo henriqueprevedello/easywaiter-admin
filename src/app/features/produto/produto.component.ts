@@ -38,4 +38,6 @@ export class ProdutoComponent implements OnInit {
   }
 
   salvar() {}
+
+  editar(){}
 }

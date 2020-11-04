@@ -12,4 +12,6 @@ export class EstabelecimentoComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  editar(){}
+
 }

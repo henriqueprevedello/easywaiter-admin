@@ -10,7 +10,8 @@ import HC_exporting from 'highcharts/modules/exporting';
 export class CardInfoComponent implements OnInit {
   @Input() label: string;
   @Input() total: string;
-  @Input() icone = 'warning';
+  @Input() icone = '';
+  @Input() corIcone = 'white';
 
   constructor() {}
 

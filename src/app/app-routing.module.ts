@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { AutenticacaoGuard } from './core/guards/autenticacao-guard';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { EstabelecimentoComponent } from './features/estabelecimento/estabelecimento.component';
+import { ListagemComandasComponent } from './features/listagem-comandas/listagem-comandas.component';
 import { ListagemProdutosComponent } from './features/listagem-produtos/listagem-produtos.component';
 import { LoginPageComponent } from './features/login/page/login-page.component';
 import { NaoEncontradoComponent } from './features/nao-encontrado/nao-encontrado/nao-encontrado.component';
 import { ProdutoComponent } from './features/produto/produto.component';
+import { SuporteComponent } from './features/suporte/suporte.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import { RotasConstant } from './shared/constants/rotas.constant';
 
@@ -31,6 +33,13 @@ const routes: Routes = [
       {
         path: 'estabelecimento',
         component: EstabelecimentoComponent
+      },
+      {
+        path: 'comandas',
+        component: ListagemComandasComponent
+      },{
+        path: 'suporte',
+        component: SuporteComponent
       },
     ],
   },
