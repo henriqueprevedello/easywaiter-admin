@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    if (this.autenticacaoService.currentTokenValue) {
+    if (this.autenticacaoService.possuiUsuarioLogado) {
       this.router.navigate(['/']);
     }
   }

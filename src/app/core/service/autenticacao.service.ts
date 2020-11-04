@@ -1,46 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Usuario } from 'src/app/models/usuario';
-import { environment } from 'src/environments/environment';
 import { AutenticacaoDTO } from 'src/app/models/autenticacao.dto';
-import { AutenticacaoFacadeApi } from '../facades/apis/autenticacao.facade.api';
+import { UsuarioDTO } from 'src/app/models/usuario.dto';
 import { AutenticacaoFacade } from '../facades/autenticacao.facade';
 
 @Injectable({ providedIn: 'root' })
 export class AutenticacaoService {
-  private currentTokenSubject: BehaviorSubject<String>;
-  public currentToken: Observable<String>;
+  private usuarioAtualSubject: BehaviorSubject<UsuarioDTO>;
+  usuarioAtual: Observable<UsuarioDTO>;
 
-  constructor(private http: HttpClient, private autenticacaoFacade: AutenticacaoFacade) {
-
-    this.currentTokenSubject = new BehaviorSubject<String>(
-      JSON.parse(localStorage.getItem('currentToken'))
+  constructor(
+    private autenticacaoFacade: AutenticacaoFacade
+  ) {
+    this.usuarioAtualSubject = new BehaviorSubject<UsuarioDTO>(
+      JSON.parse(localStorage.getItem('usuarioAtual'))
     );
 
-    this.currentToken = this.currentTokenSubject.asObservable();
-
+    this.usuarioAtual = this.usuarioAtualSubject.asObservable();
   }
 
-  public get currentTokenValue(): String {
-    return this.currentTokenSubject.value;
+  get usuarioAtualDTO(): UsuarioDTO {
+    return this.usuarioAtualSubject.value;
+  }
+
+  get possuiUsuarioLogado(){
+    if(this.usuarioAtualSubject.value ){
+      return true;
+    }
+
+    return false;
   }
 
   login(autenticacaoDTO: AutenticacaoDTO) {
-    return this.autenticacaoFacade.login(autenticacaoDTO)
-      .pipe(
-        map((user: String) => {
-          localStorage.setItem('currentToken', JSON.stringify(user));
-           this.currentTokenSubject.next(user);
-          return user;
-        })
-      );
+    return this.autenticacaoFacade.login(autenticacaoDTO).pipe(
+      map((usuarioDTO: UsuarioDTO) => {
+        localStorage.setItem('usuarioAtual', JSON.stringify(usuarioDTO));
+
+        this.usuarioAtualSubject.next(usuarioDTO);
+
+        return usuarioDTO;
+      })
+    );
   }
 
   logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentToken');
-    this.currentTokenSubject.next(null);
+    localStorage.removeItem('usuarioAtual');
+    this.usuarioAtualSubject.next(null);
   }
 }

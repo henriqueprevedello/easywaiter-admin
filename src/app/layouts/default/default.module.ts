@@ -5,10 +5,17 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardService } from 'src/app/core/service/dashboard/dashboard.service';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [DefaultComponent],
-  imports: [CommonModule, RouterModule, SharedModule, MatSidenavModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SharedModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+  ],
   providers: [DashboardService],
 })
 export class DefaultModule {}

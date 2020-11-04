@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { AutenticacaoService } from 'src/app/core/service/autenticacao.service';
 import { DashboardService } from 'src/app/core/service/dashboard/dashboard.service';
 
 export interface PeriodicElement {
@@ -48,7 +50,11 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private autenticacaoService: AutenticacaoService, private router: Router) {
+    if (!this.autenticacaoService.possuiUsuarioLogado) {
+      this.router.navigate(['/login']);
+    }
+   }
 
   ngOnInit() {
     this.bigChart = this.dashboardService.bigChart();

@@ -17,6 +17,11 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { ListagemProdutosComponent } from './listagem-produtos/listagem-produtos.component';
+import { ProdutoComponent } from './produto/produto.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import { EstabelecimentoComponent } from './estabelecimento/estabelecimento.component';
 
 
 @NgModule({
@@ -24,6 +29,9 @@ import { MatButtonModule } from '@angular/material/button';
     DashboardComponent,
     LoginPageComponent,
     NaoEncontradoComponent,
+    ListagemProdutosComponent,
+    ProdutoComponent,
+    EstabelecimentoComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +42,8 @@ import { MatButtonModule } from '@angular/material/button';
     FormsModule,
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
+    MatRadioModule,
     MatIconModule,
     MatCardModule,
     MatDividerModule,

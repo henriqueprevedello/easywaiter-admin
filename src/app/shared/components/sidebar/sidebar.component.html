@@ -1,9 +1,9 @@
 <mat-nav-list>
-    <div class="profile-card">
-        <img src="https://avatars0.githubusercontent.com/u/38365430?s=460&v=4" alt="Henrique Prevedello">
+    <div class="profile-card" *ngIf="(usuarioAtual | async) as usuario">
+        <img src="https://e7.pngegg.com/pngimages/688/352/png-clipart-computer-icons-user-symbol-symbol-miscellaneous-face.png" >
         <div class="header">
-            <h2>Henrique Prevedello</h2>
-            <h4>henriqueprevedello@hotmail.com</h4>
+            <h2>{{ usuario.nome }}</h2>
+            <h4>{{ usuario.email }}</h4>
         </div>
     </div>
 

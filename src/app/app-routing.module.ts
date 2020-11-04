@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AutenticacaoGuard } from './core/guards/autenticacao-guard';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { EstabelecimentoComponent } from './features/estabelecimento/estabelecimento.component';
+import { ListagemProdutosComponent } from './features/listagem-produtos/listagem-produtos.component';
 import { LoginPageComponent } from './features/login/page/login-page.component';
 import { NaoEncontradoComponent } from './features/nao-encontrado/nao-encontrado/nao-encontrado.component';
+import { ProdutoComponent } from './features/produto/produto.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import { RotasConstant } from './shared/constants/rotas.constant';
 
@@ -16,7 +19,19 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
         canActivate: [AutenticacaoGuard]
-      }
+      },
+      {
+        path: 'produtos',
+        component: ListagemProdutosComponent
+      },
+      {
+        path: 'produtos/novo',
+        component: ProdutoComponent
+      },
+      {
+        path: 'estabelecimento',
+        component: EstabelecimentoComponent
+      },
     ],
   },
   {

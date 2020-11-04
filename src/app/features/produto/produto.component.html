@@ -1,0 +1,80 @@
+<div id="product">
+  <div class="center">
+    <div
+      class="header accent"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+    >
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button routerLink="/produtos">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <div class="h2" *ngIf="pageType === 'edit'">
+            {{ produto.nome }}
+          </div>
+          <div class="h2" *ngIf="pageType === 'new'">Novo produto</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <form [formGroup]="options">
+        <input matInput hidden [formControl]="nomeControl"/>
+        <p>
+          <mat-form-field appearance="standard" >
+            <mat-label>Nome</mat-label>
+            <input matInput placeholder="Nome" required [formControl]="nomeControl"/>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Descrição</mat-label>
+            <input matInput placeholder="Descrição" [formControl]="descricaoControl"/>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Valor</mat-label>
+            <input
+              matInput
+              placeholder="Valor"
+              type="number"
+              class="example-right-align"
+              required
+              [formControl]="valorControl"
+            />
+            <span matPrefix>R$&nbsp;</span>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-checkbox [formControl]="ativoControl">Ativo</mat-checkbox>
+        </p>
+      </form>
+
+      <button
+        mat-raised-button
+        class="save-product-button"
+        [disabled]="options.invalid"
+        *ngIf="pageType === 'new'"
+        (click)="adicionar()"
+      >
+        <span>Adicionar</span>
+      </button>
+
+      <button
+        mat-raised-button
+        class="save-product-button"
+        [disabled]="options.invalid || options.pristine"
+        *ngIf="pageType === 'edit'"
+        (click)="salvar()"
+      >
+        <span>Salvar</span>
+      </button>
+    </div>
+  </div>
+</div>
