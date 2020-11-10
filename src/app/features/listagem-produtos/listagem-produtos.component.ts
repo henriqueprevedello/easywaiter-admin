@@ -9,7 +9,14 @@ import { ProdutoDTO } from 'src/app/models/produto.dto';
 })
 export class ListagemProdutosComponent implements OnInit {
   produtos: Array<ProdutoDTO>;
-  displayedColumns: string[] = ['id', 'nome', 'descricao', 'valor', 'ativo'];
+  displayedColumns: string[] = [
+    'id',
+    'nome',
+    'descricao',
+    'valor',
+    'categoria',
+    'ativo',
+  ];
 
   constructor(private produtoFacade: ProdutoFacade) {}
 
@@ -17,5 +24,9 @@ export class ListagemProdutosComponent implements OnInit {
     this.produtoFacade
       .adquirir()
       .subscribe((listaProdutos) => (this.produtos = listaProdutos));
+  }
+
+  adquirirCor(ativo: boolean) {
+    return ativo ? 'background-color: green;' : 'background-color: red;';
   }
 }

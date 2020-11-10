@@ -1,43 +1,100 @@
 <div
-class="header"
-fxLayout="column"
-fxLayoutAlign="center center"
-fxLayout.gt-sm="row"
-fxLayoutAlign.gt-sm="space-between center"
+  class="header"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayout.gt-sm="row"
+  fxLayoutAlign.gt-sm="space-between center"
 >
-<div fxLayout="row" fxLayoutAlign="start center">
-  <mat-icon> restaurant </mat-icon>
-  <span class="titulo"> Estabelecimento </span>
-</div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon> restaurant </mat-icon>
+    <span class="titulo"> Estabelecimento </span>
+  </div>
 
-<div>
-</div>
+  <div></div>
 
-<button mat-raised-button (click)="editar()">
-  <span>Editar</span>
-</button>
-
+  <div></div>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <img
-      mat-card-image
-      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-      alt="Photo of a Shiba Inu"
-    />
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz
-        breeds of dog from Japan. A small, agile dog that copes very well with
-        mountainous terrain, the Shiba Inu was originally bred for hunting.
-      </p>
-    </mat-card-content>
-    
-  </mat-card>
+  <form [formGroup]="options">
+    <p>
+      <mat-form-field hidden>
+        <input matInput [formControl]="idControl" />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          required
+          placeholder="Nome"
+          [formControl]="nomeControl"
+        />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>Descrição</mat-label>
+        <input
+          matInput
+          required
+          placeholder="Descrição"
+          [formControl]="descricaoControl"
+        />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>Telefone</mat-label>
+        <input
+          matInput
+          required
+          placeholder="Telefone"
+          [formControl]="telefoneControl"
+        />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>CNPJ</mat-label>
+        <input matInput placeholder="Cnpj" [formControl]="cnpjControl" />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <input matInput placeholder="Estado" [formControl]="estadoControl" />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>Cidade</mat-label>
+        <input matInput placeholder="Cidade" [formControl]="cidadeControl" />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <mat-label>Imagem</mat-label>
+        <input matInput placeholder="Imagem" [formControl]="imagemControl" />
+      </mat-form-field>
+    </p>
+  </form>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button
+    mat-raised-button
+    [disabled]="options.invalid || options.pristine"
+    (click)="editar()"
+  >
+    <span>Salvar</span>
+  </button>
 </div>

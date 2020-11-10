@@ -15,18 +15,48 @@ export interface UserData {
 
 /** Constants used to fill up our data base. */
 const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
+  'maroon',
+  'red',
+  'orange',
+  'yellow',
+  'olive',
+  'green',
+  'purple',
+  'fuchsia',
+  'lime',
+  'teal',
+  'aqua',
+  'blue',
+  'navy',
+  'black',
+  'gray',
 ];
 const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
+  'Maia',
+  'Asher',
+  'Olivia',
+  'Atticus',
+  'Amelia',
+  'Jack',
+  'Charlotte',
+  'Theodore',
+  'Isla',
+  'Oliver',
+  'Isabella',
+  'Jasper',
+  'Cora',
+  'Levi',
+  'Violet',
+  'Arthur',
+  'Mia',
+  'Thomas',
+  'Elizabeth',
 ];
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
@@ -35,9 +65,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dashboardService: DashboardService, private autenticacaoService: AutenticacaoService, private router: Router) {
+  constructor(
+    private dashboardService: DashboardService,
+    private autenticacaoService: AutenticacaoService,
+    private router: Router
+  ) {
     // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
@@ -45,10 +79,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     if (!this.autenticacaoService.possuiUsuarioLogado) {
       this.router.navigate(['/login']);
     }
-   }
+  }
 
   ngOnInit() {
-
     this.dataSource.paginator = this.paginator;
   }
 
@@ -66,16 +99,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
+  adquirirCorIcone(valorBase: number, valorAtual: number): string {
+    debugger;
+    if (valorAtual > valorBase * 3) {
+      return 'red';
+    } else if (valorAtual > valorBase * 2) {
+      return 'orange';
+    } else if (valorAtual > valorBase) {
+      return 'yellow';
+    }
+
+    return 'lightskyblue';
+  }
 }
 
 function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+  const name =
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
+    ' ' +
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
+    '.';
 
   return {
     id: id.toString(),
     name: name,
     progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
   };
 }

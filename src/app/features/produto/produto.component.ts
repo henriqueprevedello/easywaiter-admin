@@ -5,8 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { CategoriaFacade } from 'src/app/core/facades/categoria.facade';
 import { ProdutoFacade } from 'src/app/core/facades/produto.facade';
+import { SnackbarService } from 'src/app/core/service/snackbar.service';
 import { CategoriaDTO } from 'src/app/models/categoria.dto';
 
 @Component({
@@ -29,7 +32,9 @@ export class ProdutoComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private produtoFacade: ProdutoFacade,
-    private categoriaFacade: CategoriaFacade
+    private categoriaFacade: CategoriaFacade,
+    private router: Router,
+    private snackbarService: SnackbarService
   ) {
     this.options = formBuilder.group({
       id: this.idControl,
@@ -44,6 +49,7 @@ export class ProdutoComponent implements OnInit {
   ngOnInit(): void {
     this.categoriaFacade
       .adquirirPorEstabelecimento()
+      .pipe(take(1))
       .subscribe((listaCategorias) => {
         this.categorias = listaCategorias;
       });
@@ -52,7 +58,12 @@ export class ProdutoComponent implements OnInit {
   adicionar(): void {
     this.produtoFacade
       .adicionar(this.options.value)
-      .subscribe(() => this.options.reset());
+      .pipe(take(1))
+      .subscribe(() => {
+        this.options.reset();
+        this.router.navigate(['/produtos']);
+        this.snackbarService.exibir('Produto cadastrado com sucesso!');
+      });
   }
 
   salvar(): void {}

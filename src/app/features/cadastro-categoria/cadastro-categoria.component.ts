@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { CategoriaFacade } from 'src/app/core/facades/categoria.facade';
 import { SnackbarService } from 'src/app/core/service/snackbar.service';
 
@@ -37,9 +38,9 @@ export class CadastroCategoriaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.pipe(take(1)).subscribe((params) => {
       if (params) {
-        this.tipoPagina='editar';
+        this.tipoPagina = 'editar';
         this.options.get('nome').setValue(params.get('nome'));
         this.options.get('id').setValue(params.get('id'));
       }
@@ -47,18 +48,24 @@ export class CadastroCategoriaComponent implements OnInit {
   }
 
   cadastrar() {
-    this.categoriaFacade.cadastrar(this.options.value).subscribe(() => {
-      this.options.reset();
-      this.router.navigate(['/categorias']);
-      this.snackbarService.exibir('Categoria cadastrada com sucesso!');
-    });
+    this.categoriaFacade
+      .cadastrar(this.options.value)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.options.reset();
+        this.router.navigate(['/categorias']);
+        this.snackbarService.exibir('Categoria cadastrada com sucesso!');
+      });
   }
 
   editar() {
-    this.categoriaFacade.editar(this.options.value).subscribe(() => {
-      this.options.reset();
-      this.router.navigate(['/categorias']);
-      this.snackbarService.exibir('Categoria editada com sucesso!');
-    });
+    this.categoriaFacade
+      .editar(this.options.value)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.options.reset();
+        this.router.navigate(['/categorias']);
+        this.snackbarService.exibir('Categoria editada com sucesso!');
+      });
   }
 }

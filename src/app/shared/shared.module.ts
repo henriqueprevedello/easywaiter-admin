@@ -14,7 +14,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HeaderLoggedOutComponent } from './components/header-logged-out/header-logged-out.component';
+import { UploadImagemComponent } from './components/upload-imagem/upload-imagem.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { HeaderLoggedOutComponent } from './components/header-logged-out/header-
     HeaderLoggedOutComponent,
     SidebarComponent,
     CardInfoComponent,
+    UploadImagemComponent,
   ],
   imports: [
     CommonModule,
@@ -36,12 +39,14 @@ import { HeaderLoggedOutComponent } from './components/header-logged-out/header-
     HighchartsChartModule,
     MatCardModule,
     MatGridListModule,
+    MatProgressBarModule,
   ],
   exports: [
     HeaderComponent,
     HeaderLoggedOutComponent,
     SidebarComponent,
     CardInfoComponent,
+    UploadImagemComponent,
   ],
 })
 export class SharedModule {}
