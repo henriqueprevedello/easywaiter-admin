@@ -1,0 +1,56 @@
+<div
+  class="header"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayout.gt-sm="row"
+  fxLayoutAlign.gt-sm="space-between center"
+>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon> library_add </mat-icon>
+    <span class="titulo"> Cadastro de mesa </span>
+  </div>
+
+  <div></div>
+
+  <button mat-raised-button routerLink="/mesas">
+    <span>Voltar</span>
+  </button>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <form [formGroup]="options">
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Número</mat-label>
+        <input
+        matInput
+          type="number"
+          placeholder="Número"
+          [formControl]="numeroControl"
+        />
+      </mat-form-field>
+    </p>
+  </form>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button
+    mat-raised-button
+    class="save-product-button"
+    [disabled]="options.invalid"
+    *ngIf="tipoPagina === 'cadastro'"
+    (click)="cadastrar()"
+  >
+    <span>Cadastrar</span>
+  </button>
+
+  <button
+    mat-raised-button
+    class="save-product-button"
+    [disabled]="options.invalid || options.pristine"
+    *ngIf="tipoPagina === 'editar'"
+    (click)="editar()"
+  >
+    <span>Salvar</span>
+  </button>
+</div>

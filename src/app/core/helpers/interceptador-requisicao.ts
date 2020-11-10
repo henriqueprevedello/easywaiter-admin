@@ -13,7 +13,6 @@ export class InterceptadorRequisicao implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    debugger;
     request = this.setHeaders(request);
 
     return next.handle(request).pipe(

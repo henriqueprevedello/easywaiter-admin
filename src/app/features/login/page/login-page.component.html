@@ -1,24 +1,27 @@
 <app-header-logged-out></app-header-logged-out>
 
 <div id="login" fxLayout="column">
+
   <div id="login-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
     <div id="login-form">
       <div class="title">Login</div>
 
       <form name="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
         <mat-form-field appearance="outline">
+
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" />
+
           <mat-icon matSuffix class="secondary-text">mail</mat-icon>
           <mat-error *ngIf="loginForm.get('email').hasError('required')">
             Email é obrigatório
+
+
           </mat-error>
-          <mat-error
-            *ngIf="
+          <mat-error *ngIf="
               !loginForm.get('email').hasError('required') &&
               loginForm.get('email').hasError('email')
-            "
-          >
+            ">
             Por favor, insira um endereço de email válido
           </mat-error>
         </mat-form-field>
@@ -30,27 +33,13 @@
           <mat-error> Senha é obrigatória </mat-error>
         </mat-form-field>
 
-        <div
-          class="remember-forgot-password"
-          fxLayout="row"
-          fxLayout.xs="column"
-          fxLayoutAlign="space-between center"
-        >
+        <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
           <a class="forgot-password"> Esqueceu sua senha? </a>
         </div>
 
-        <button
-          [disabled]="loading"
-          mat-raised-button
-          color="accent"
-          class="submit-button"
-          aria-label="LOG IN"
-          [disabled]="loginForm.invalid"
-        >
-          <span
-            *ngIf="loading"
-            class="spinner-border spinner-border-sm mr-1"
-          ></span>
+        <button [disabled]="loading" mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
+          [disabled]="loginForm.invalid">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
           LOGIN
         </button>
 

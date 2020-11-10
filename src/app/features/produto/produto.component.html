@@ -19,14 +19,14 @@
 
 <div fxLayout="row" fxLayoutAlign="center center">
   <form [formGroup]="options">
-    <input matInput hidden [formControl]="nomeControl" />
+    
     <p>
       <mat-form-field appearance="standard">
         <mat-label>Nome</mat-label>
         <input
           matInput
-          placeholder="Nome"
           required
+          placeholder="Nome"
           [formControl]="nomeControl"
         />
       </mat-form-field>
@@ -37,6 +37,7 @@
         <mat-label>Descrição</mat-label>
         <input
           matInput
+          required
           placeholder="Descrição"
           [formControl]="descricaoControl"
         />
@@ -48,13 +49,27 @@
         <mat-label>Valor</mat-label>
         <input
           matInput
+          required
           placeholder="Valor"
           type="number"
           class="example-right-align"
-          required
           [formControl]="valorControl"
         />
         <span matPrefix>R$&nbsp;</span>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Categoria</mat-label>
+        <mat-select [formControl]="categoriaControl" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+            {{categoria.nome}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="categoriaControl.hasError('required')">Por favor selecione uma categoria</mat-error>
+        <mat-hint>{{categoriaControl.value?.sound}}</mat-hint>
       </mat-form-field>
     </p>
 

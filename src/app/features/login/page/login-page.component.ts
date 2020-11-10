@@ -12,7 +12,6 @@ import { first, take } from 'rxjs/operators';
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
-  submitted = false;
   returnUrl: string;
   error = '';
   hide = true;
@@ -42,9 +41,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
@@ -54,12 +50,8 @@ export class LoginPageComponent implements OnInit {
       .login({ email: this.f.email.value, senha: this.f.password.value })
       .pipe(take(1))
       .subscribe(
-        (data) => {
-          debugger;
-          this.router.navigate([this.returnUrl]);
-        },
+        (data) => this.router.navigate([this.returnUrl]),
         (error) => {
-          debugger;
           this.error = error;
           this.loading = false;
         }

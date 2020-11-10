@@ -1,0 +1,21 @@
+<app-header-logged-out></app-header-logged-out>
+
+<div id="container" fxLayout="column">
+  <div id="wrapper" fxLayout="column" fxLayoutAlign="center center">
+    <div id="mensagem">
+      <div class="title">Ops! Sem conexão com o servidor... :(</div>
+    </div>
+
+    <button
+      mat-raised-button
+      [disabled]="!botaoHabilitado"
+      (click)="tentarNovamente()"
+    >
+      <span
+        *ngIf="!botaoHabilitado"
+        class="spinner-border spinner-border-sm mr-1"
+      ></span
+      >Tentar novamente
+    </button>
+  </div>
+</div>

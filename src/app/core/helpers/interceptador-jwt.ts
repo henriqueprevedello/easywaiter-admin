@@ -16,7 +16,7 @@ export class InterceptadorJwt implements HttpInterceptor {
     private autenticacaoService: AutenticacaoService,
     private router: Router,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -24,8 +24,12 @@ export class InterceptadorJwt implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     if (
       !this.autenticacaoService.possuiUsuarioLogado &&
-      !request.url.includes('/autenticacao')
+      !(
+        request.url.includes('/autenticacao') ||
+        request.url.includes('/conexao')
+      )
     ) {
+      debugger;
       this.router.navigate(['/login']);
 
       this.snackbarService.exibir('Refaça login para continuar');

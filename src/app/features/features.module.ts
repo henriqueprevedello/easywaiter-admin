@@ -24,6 +24,11 @@ import {MatSelectModule} from '@angular/material/select';
 import { EstabelecimentoComponent } from './estabelecimento/estabelecimento.component';
 import { ListagemComandasComponent } from './listagem-comandas/listagem-comandas.component';
 import { SuporteComponent } from './suporte/suporte.component';
+import { ListagemMesasComponent } from './listagem-mesas/listagem-mesas.component';
+import { CadastroMesaComponent } from './cadastro-mesa/cadastro-mesa.component';
+import { CadastroCategoriaComponent } from './cadastro-categoria/cadastro-categoria.component';
+import { ListagemCategoriasComponent } from './listagem-categorias/listagem-categorias.component';
+import { SemConexaoComponent } from './sem-conexao/sem-conexao.component';
 
 
 @NgModule({
@@ -36,6 +41,11 @@ import { SuporteComponent } from './suporte/suporte.component';
     EstabelecimentoComponent,
     ListagemComandasComponent,
     SuporteComponent,
+    ListagemMesasComponent,
+    CadastroMesaComponent,
+    CadastroCategoriaComponent,
+    ListagemCategoriasComponent,
+    SemConexaoComponent,
   ],
   imports: [
     CommonModule,
