@@ -10,13 +10,16 @@ import { take } from 'rxjs/operators';
 import { CategoriaFacade } from 'src/app/core/facades/categoria.facade';
 import { SnackbarService } from 'src/app/core/service/snackbar.service';
 
+const tipoCadastro = 'cadastro';
+const tipoEdicao = 'edicao';
+
 @Component({
   selector: 'app-cadastro-categoria',
   templateUrl: './cadastro-categoria.component.html',
   styleUrls: ['./cadastro-categoria.component.scss'],
 })
 export class CadastroCategoriaComponent implements OnInit {
-  tipoPagina = 'cadastro';
+  tipoPagina = tipoCadastro;
   options: FormGroup;
   idControl = new FormControl();
   nomeControl = new FormControl('', [
@@ -39,8 +42,8 @@ export class CadastroCategoriaComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.pipe(take(1)).subscribe((params) => {
-      if (params) {
-        this.tipoPagina = 'editar';
+      if (params && params.get('id')) {
+        this.tipoPagina = tipoEdicao;
         this.options.get('nome').setValue(params.get('nome'));
         this.options.get('id').setValue(params.get('id'));
       }

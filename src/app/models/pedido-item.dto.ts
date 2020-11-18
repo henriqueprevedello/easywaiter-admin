@@ -1,5 +1,8 @@
+import { ProdutoDTO } from './produto.dto';
+
 export class PedidoItemDTO {
     id: number;
-    codigoProduto: number;
     quantidade: number;
+    codigoProduto: number;
+    produto: ProdutoDTO;
 }

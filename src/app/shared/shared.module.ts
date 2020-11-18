@@ -4,7 +4,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { HighchartsChartModule } from 'highcharts-angular';
 import { CardInfoComponent } from './widgets/card-info/card-info.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,7 +35,6 @@ import { UploadImagemComponent } from './components/upload-imagem/upload-imagem.
     MatMenuModule,
     MatListModule,
     RouterModule,
-    HighchartsChartModule,
     MatCardModule,
     MatGridListModule,
     MatProgressBarModule,

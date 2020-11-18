@@ -1,17 +1,12 @@
 <div class="card-container">
   <div fxLayout="row" fxLayoutAlign="center center">
-    <mat-icon [ngStyle]="{ color: corIcone }">{{ icone }}</mat-icon>
-  </div>
-
-  <br />
-
-  <div fxLayout="row" fxLayoutAlign="center center">
     <h4>{{ label }}</h4>
   </div>
 
   <br />
+ 
 
   <div fxLayout="row" fxLayoutAlign="center center">
-    <span class="total">{{ total }}</span>
+    <span class="total" [style]="'color: '.concat(corIcone)">{{ total }}</span>
   </div>
 </div>
