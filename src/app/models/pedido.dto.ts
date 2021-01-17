@@ -1,11 +1,12 @@
+import { ClienteDTO } from './cliente.dto';
 import { PedidoItemDTO } from './pedido-item.dto';
-import { UsuarioDTO } from './usuario.dto';
 
 export class PedidoDTO {
     id: number;
     dataCadastro: string;
     pedidosItem: Array<PedidoItemDTO>;
     codigoCliente: number;
-    cliente: UsuarioDTO;
+    cliente: ClienteDTO;
     codigoEstabelecimento: number;
+    
 }

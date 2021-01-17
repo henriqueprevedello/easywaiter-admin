@@ -33,27 +33,27 @@
     
       <ng-container matColumnDef="mesa">
         <th mat-header-cell *matHeaderCellDef> Mesa </th>
-        <td mat-cell *matCellDef="let element"> {{element.mesa}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.mesa.numero}} </td>
       </ng-container>
     
       <ng-container matColumnDef="nomeCliente">
         <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.nomeCliente}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.cliente.usuario.nome}} </td>
       </ng-container>
   
       <ng-container matColumnDef="numeroPedidos">
         <th mat-header-cell *matHeaderCellDef> Número de pedidos </th>
-        <td mat-cell *matCellDef="let element"> R$ {{element.pedidos.length }} </td>
+        <td mat-cell *matCellDef="let element"> {{element.pedidos.length }} </td>
       </ng-container>
   
       <ng-container matColumnDef="dataAbertura">
         <th mat-header-cell *matHeaderCellDef> Abertura da comanda </th>
-        <td mat-cell *matCellDef="let element"> {{element.dataAbertura}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.dataAbertura.replaceAll("T", " ").replaceAll("+00:00", "") }} </td>
       </ng-container>
 
       <ng-container matColumnDef="dataFechamento">
         <th mat-header-cell *matHeaderCellDef> Fechamento da comanda </th>
-        <td mat-cell *matCellDef="let element"> {{element.dataFechamento}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.dataFechamento ? element.dataFechamento : 'Em aberto'}} </td>
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

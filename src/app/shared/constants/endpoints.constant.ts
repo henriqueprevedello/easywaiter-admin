@@ -3,6 +3,7 @@ const URL_EASY_WAITER_SERVER = 'http://localhost:3200';
 const URL_CONTROLLER_AUTENTICACAO = `${URL_EASY_WAITER_SERVER}/autenticacao`;
 const URL_CONTROLLER_PRODUTO = `${URL_EASY_WAITER_SERVER}/produto`;
 const URL_CONTROLLER_COMANDA = `${URL_EASY_WAITER_SERVER}/comanda`;
+const URL_CONTROLLER_PEDIDO = `${URL_EASY_WAITER_SERVER}/pedido`;
 const URL_CONTROLLER_MESA = `${URL_EASY_WAITER_SERVER}/mesa`;
 const URL_CONTROLLER_CATEGORIA = `${URL_EASY_WAITER_SERVER}/categoria`;
 const URL_CONTROLLER_CONEXAO = `${URL_EASY_WAITER_SERVER}/conexao`;
@@ -20,6 +21,10 @@ export class EndpointsConstants {
 
   static readonly COMANDA = {
     ADQUIRIR_TODAS: URL_CONTROLLER_COMANDA,
+  };
+
+  static readonly PEDIDO = {
+    ADQUIRIR_NAO_FINALIZADOS: URL_CONTROLLER_PEDIDO.concat('/adquirirNaoFinalizados'),
   };
 
   static readonly MESA = {

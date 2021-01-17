@@ -11,7 +11,7 @@ export class ListagemComandasComponent implements OnInit {
 
   comandas: Array<ComandaDTO>;
 
-  displayedColumns: string[] = ['id', 'mesa', 'nomeCliente', 'numeroPedidos', 'dataFechamento', 'dataFechamento'];
+  displayedColumns: string[] = ['id', 'mesa', 'nomeCliente', 'numeroPedidos', 'dataAbertura', 'dataFechamento'];
 
   constructor(private comandaFacade: ComandaFacade) { }
 
@@ -20,7 +20,10 @@ export class ListagemComandasComponent implements OnInit {
   }
 
   atualizar(){
-    this.comandaFacade.adquirirTodas().subscribe(todasComandas => (this.comandas = todasComandas));
+    this.comandaFacade.adquirirTodas().subscribe(todasComandas => {
+      debugger;
+      (this.comandas = todasComandas)
+    });
   }
 
 }

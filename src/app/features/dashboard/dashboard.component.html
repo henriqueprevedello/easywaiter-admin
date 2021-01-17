@@ -51,19 +51,29 @@
   multiTemplateDataRows
   class="mat-elevation-z8"
 >
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>Número pedido</th>
-    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  <ng-container matColumnDef="id" hidden="true">
+    <th mat-header-cell *matHeaderCellDef>Nº Pedido</th>
+    <td mat-cell *matCellDef="let element">#{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="codigoStatus">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let element">{{ exibirStatus(element.codigoStatus) }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="mesaDTO">
+    <th mat-header-cell *matHeaderCellDef>Mesa</th>
+    <td mat-cell *matCellDef="let element">{{ element.mesaDTO.numero }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nomeCliente">
+    <th mat-header-cell *matHeaderCellDef>Cliente</th>
+    <td mat-cell *matCellDef="let element">{{ element.nomeCliente }}</td>
   </ng-container>
 
   <ng-container matColumnDef="dataCadastro">
     <th mat-header-cell *matHeaderCellDef>Horário</th>
     <td mat-cell *matCellDef="let element">{{ element.dataCadastro }}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="codigoCliente">
-    <th mat-header-cell *matHeaderCellDef>Cliente</th>
-    <td mat-cell *matCellDef="let element">{{ element.cliente.nome }}</td>
   </ng-container>
 
   <!-- Linha expandida -->
@@ -80,7 +90,7 @@
         class="example-element-detail row"
       >
         <mat-card
-          *ngFor="let pedidoItem of element.pedidosItem"
+          *ngFor="let pedidoItem of element.pedidoItens"
           fxFlex="calc(25%-25px)"
           fxFlex.sm="calc(50%-25px)"
           fxFlex.md="calc(33%-25px)"
