@@ -8,15 +8,9 @@
   <div fxLayout="row" fxLayoutAlign="start center">
     <mat-icon> library_add </mat-icon>
     <span class="titulo">
-      {{ tipoPagina == 'edicao' ? "Edição" : "Cadastro" }} de categoria
+      {{ tipoPagina == "edicao" ? "Edição" : "Cadastro" }} de categoria
     </span>
   </div>
-
-  <div></div>
-
-  <button mat-raised-button routerLink="/categorias">
-    <span>Voltar</span>
-  </button>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">
@@ -35,12 +29,13 @@
   </form>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center">
+<div class="buttons" fxLayout="row" fxLayoutAlign="center center">
   <button
     mat-raised-button
     [disabled]="options.invalid"
     *ngIf="tipoPagina === 'cadastro'"
     (click)="cadastrar()"
+    color="accent"
   >
     <span>Cadastrar</span>
   </button>
@@ -48,9 +43,23 @@
   <button
     mat-raised-button
     [disabled]="options.invalid || options.pristine"
-    *ngIf="tipoPagina === 'editar'"
+    *ngIf="tipoPagina === 'edicao'"
     (click)="editar()"
+    color="accent"
   >
     <span>Salvar</span>
+  </button>
+
+  <button
+    mat-raised-button
+    *ngIf="tipoPagina === 'edicao'"
+    (click)="excluir()"
+    color="warn"
+  >
+    <span>Excluir</span>
+  </button>
+
+  <button mat-raised-button routerLink="/categorias" color="basic">
+    <span>Cancelar</span>
   </button>
 </div>

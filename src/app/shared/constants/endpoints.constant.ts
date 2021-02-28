@@ -17,6 +17,7 @@ export class EndpointsConstants {
   static readonly PRODUTO = {
     ADICIONAR: URL_CONTROLLER_PRODUTO,
     ADQUIRIR: URL_CONTROLLER_PRODUTO,
+    ADQUIRIR_TODOS: URL_CONTROLLER_PRODUTO.concat('/adquirirTodos'),
   };
 
   static readonly COMANDA = {
@@ -25,17 +26,22 @@ export class EndpointsConstants {
 
   static readonly PEDIDO = {
     ADQUIRIR_NAO_FINALIZADOS: URL_CONTROLLER_PEDIDO.concat('/adquirirNaoFinalizados'),
+    PROSSEGUIR: URL_CONTROLLER_PEDIDO.concat('/prosseguir'),
+    RECUSAR: URL_CONTROLLER_PEDIDO.concat('/recusar'),
   };
 
   static readonly MESA = {
     ADQUIRIR_POR_ESTABELECIMENTO: URL_CONTROLLER_MESA,
     CADASTRAR: URL_CONTROLLER_MESA,
+    EDITAR: URL_CONTROLLER_MESA,
+    EXCLUIR: URL_CONTROLLER_MESA,
   };
 
   static readonly CATEGORIA = {
     ADQUIRIR_POR_ESTABELECIMENTO: URL_CONTROLLER_CATEGORIA,
     CADASTRAR: URL_CONTROLLER_CATEGORIA,
-    EDITAR: URL_CONTROLLER_CATEGORIA.concat('/editar'),
+    EDITAR: URL_CONTROLLER_CATEGORIA,
+    EXCLUIR: URL_CONTROLLER_CATEGORIA
   };
 
   static readonly CONEXAO = {

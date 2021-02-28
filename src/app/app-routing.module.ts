@@ -11,11 +11,10 @@ import { ListagemMesasComponent } from './features/listagem-mesas/listagem-mesas
 import { ListagemProdutosComponent } from './features/listagem-produtos/listagem-produtos.component';
 import { LoginPageComponent } from './features/login/page/login-page.component';
 import { NaoEncontradoComponent } from './features/nao-encontrado/nao-encontrado/nao-encontrado.component';
-import { ProdutoComponent } from './features/produto/produto.component';
+import { CadastroProdutoComponent } from './features/cadastro-produto/cadastro-produto.component';
 import { SemConexaoComponent } from './features/sem-conexao/sem-conexao.component';
 import { SuporteComponent } from './features/suporte/suporte.component';
 import { DefaultComponent } from './layouts/default/default.component';
-import { RotasConstant } from './shared/constants/rotas.constant';
 
 const routes: Routes = [
   {
@@ -25,6 +24,7 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardComponent,
+        // TODO
         canActivate: [AutenticacaoGuard],
       },
       {
@@ -32,8 +32,8 @@ const routes: Routes = [
         component: ListagemProdutosComponent,
       },
       {
-        path: 'produtos/novo',
-        component: ProdutoComponent,
+        path: 'cadastro-produto',
+        component: CadastroProdutoComponent,
       },
       {
         path: 'estabelecimento',
@@ -66,11 +66,11 @@ const routes: Routes = [
     ],
   },
   {
-    path: RotasConstant.LOGIN,
+    path: 'login',
     component: LoginPageComponent,
   },
   {
-    path: RotasConstant.NAO_ENCONTRADO,
+    path: 'nao-encontrado',
     component: NaoEncontradoComponent,
   },
   {
@@ -79,7 +79,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: RotasConstant.NAO_ENCONTRADO,
+    redirectTo: 'nao-encontrado',
   },
 ];
 
@@ -88,5 +88,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
-
-// se der pau nos guards ou autenticacao ver em https://jasonwatmore.com/post/2019/06/22/angular-8-jwt-authentication-example-tutorial#auth-guard-ts

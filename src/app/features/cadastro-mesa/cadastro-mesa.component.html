@@ -7,23 +7,26 @@
 >
   <div fxLayout="row" fxLayoutAlign="start center">
     <mat-icon> library_add </mat-icon>
-    <span class="titulo"> Cadastro de mesa </span>
+    <span class="titulo">
+      {{ tipoPagina == "edicao" ? "Edição" : "Cadastro" }} de mesa
+    </span>
   </div>
 
   <div></div>
-
-  <button mat-raised-button routerLink="/mesas">
-    <span>Voltar</span>
-  </button>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">
   <form [formGroup]="options">
     <p>
+      <mat-form-field hidden>
+        <input matInput [formControl]="idControl" />
+      </mat-form-field>
+    </p>
+    <p>
       <mat-form-field appearance="standard">
         <mat-label>Número</mat-label>
         <input
-        matInput
+          matInput
           type="number"
           placeholder="Número"
           [formControl]="numeroControl"
@@ -33,24 +36,37 @@
   </form>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center">
+<div class="buttons" fxLayout="row" fxLayoutAlign="center center">
   <button
     mat-raised-button
-    class="save-product-button"
     [disabled]="options.invalid"
     *ngIf="tipoPagina === 'cadastro'"
     (click)="cadastrar()"
+    color="accent"
   >
     <span>Cadastrar</span>
   </button>
 
   <button
     mat-raised-button
-    class="save-product-button"
     [disabled]="options.invalid || options.pristine"
-    *ngIf="tipoPagina === 'editar'"
+    *ngIf="tipoPagina === 'edicao'"
     (click)="editar()"
+    color="accent"
   >
     <span>Salvar</span>
+  </button>
+
+  <button
+    mat-raised-button
+    *ngIf="tipoPagina === 'edicao'"
+    (click)="excluir()"
+    color="warn"
+  >
+    <span>Excluir</span>
+  </button>
+
+  <button mat-raised-button routerLink="/mesas" color="basic">
+    <span>Cancelar</span>
   </button>
 </div>

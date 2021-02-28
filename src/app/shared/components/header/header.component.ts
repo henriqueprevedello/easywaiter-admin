@@ -1,13 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutenticacaoService } from 'src/app/core/service/autenticacao.service';
+import { RotasConstant } from '../../constants/rotas.constant';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -15,11 +16,9 @@ export class HeaderComponent implements OnInit {
     private autenticacaoService: AutenticacaoService
   ) {}
 
-  ngOnInit() {}
-
   logout() {
     this.autenticacaoService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate([RotasConstant.LOGIN]);
   }
 
   toggleSideBar() {

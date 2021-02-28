@@ -1,0 +1,115 @@
+<div
+  class="header"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayout.gt-sm="row"
+  fxLayoutAlign.gt-sm="space-between center"
+>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon> library_add </mat-icon>
+    <span class="titulo"> Novo produto </span>
+  </div>
+
+  <div></div>
+
+  <button mat-raised-button routerLink="/produtos">
+    <span>Voltar</span>
+  </button>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <form [formGroup]="options">
+    
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          required
+          placeholder="Nome"
+          [formControl]="nomeControl"
+        />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Descrição</mat-label>
+        <input
+          matInput
+          required
+          placeholder="Descrição"
+          [formControl]="descricaoControl"
+        />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="standard">
+        <mat-label>Valor</mat-label>
+        <input
+          matInput
+          required
+          placeholder="Valor"
+          type="number"
+          class="example-right-align"
+          [formControl]="valorControl"
+        />
+        <span matPrefix>R$&nbsp;</span>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Categoria</mat-label>
+        <mat-select [formControl]="categoriaControl" required>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+            {{categoria.nome}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="categoriaControl.hasError('required')">Por favor selecione uma categoria</mat-error>
+        <mat-hint>{{categoriaControl.value?.sound}}</mat-hint>
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-checkbox [formControl]="ativoControl">Ativo</mat-checkbox>
+    </p>
+  </form>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button
+    mat-raised-button
+    [disabled]="options.invalid"
+    *ngIf="tipoPagina === 'cadastro'"
+    (click)="cadastrar()"
+    color="accent"
+  >
+    <span>Cadastrar</span>
+  </button>
+
+  <button
+    mat-raised-button
+    [disabled]="options.invalid || options.pristine"
+    *ngIf="tipoPagina === 'edicao'"
+    (click)="editar()"
+    color="accent"
+  >
+    <span>Salvar</span>
+  </button>
+
+  <button
+    mat-raised-button
+    *ngIf="tipoPagina === 'edicao'"
+    (click)="excluir()"
+    color="warn"
+  >
+    <span>Excluir</span>
+  </button>
+
+  <button mat-raised-button routerLink="/produtos" color="basic">
+    <span>Cancelar</span>
+  </button>
+</div>

@@ -9,6 +9,7 @@ import { Observable, of } from 'rxjs';
 import { AutenticacaoService } from '../service/autenticacao.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../service/snackbar.service';
+import { RotasConstant } from 'src/app/shared/constants/rotas.constant';
 
 @Injectable()
 export class InterceptadorJwt implements HttpInterceptor {
@@ -16,7 +17,7 @@ export class InterceptadorJwt implements HttpInterceptor {
     private autenticacaoService: AutenticacaoService,
     private router: Router,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -29,8 +30,7 @@ export class InterceptadorJwt implements HttpInterceptor {
         request.url.includes('/conexao')
       )
     ) {
-      debugger;
-      this.router.navigate(['/login']);
+      this.router.navigate([RotasConstant.LOGIN]);
 
       this.snackbarService.exibir('Refaça login para continuar');
 

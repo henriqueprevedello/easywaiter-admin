@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EndpointsConstants } from 'src/app/shared/constants/endpoints.constant';
 import { ProdutoDTO } from 'src/app/models/produto.dto';
@@ -15,9 +15,17 @@ export class ProdutoFacadeApi {
     );
   }
 
-  adquirir(): Observable<Array<ProdutoDTO>> {
+  adquirir(codigoProduto: string): Observable<ProdutoDTO> {
+    const params = new HttpParams().set('codigoProduto', codigoProduto);
+
+    return this.http.get<ProdutoDTO>(EndpointsConstants.PRODUTO.ADQUIRIR, {
+      params,
+    });
+  }
+
+  adquirirTodos(): Observable<Array<ProdutoDTO>> {
     return this.http.get<Array<ProdutoDTO>>(
-      EndpointsConstants.PRODUTO.ADQUIRIR
+      EndpointsConstants.PRODUTO.ADQUIRIR_TODOS
     );
   }
 }

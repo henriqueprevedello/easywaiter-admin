@@ -18,7 +18,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ListagemProdutosComponent } from './listagem-produtos/listagem-produtos.component';
-import { ProdutoComponent } from './produto/produto.component';
+import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { EstabelecimentoComponent } from './estabelecimento/estabelecimento.component';
@@ -30,6 +30,7 @@ import { CadastroCategoriaComponent } from './cadastro-categoria/cadastro-catego
 import { ListagemCategoriasComponent } from './listagem-categorias/listagem-categorias.component';
 import { SemConexaoComponent } from './sem-conexao/sem-conexao.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     LoginPageComponent,
     NaoEncontradoComponent,
     ListagemProdutosComponent,
-    ProdutoComponent,
+    CadastroProdutoComponent,
     EstabelecimentoComponent,
     ListagemComandasComponent,
     SuporteComponent,
@@ -58,6 +59,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatFormFieldModule,
     MatSelectModule,
     MatRadioModule,
+    MatListModule,
     MatIconModule,
     MatCardModule,
     MatDividerModule,

@@ -8,10 +8,18 @@ export class MesaFacade {
   constructor(private api: MesaFacadeApi) {}
 
   cadastrar(mesaDTO: MesaDTO): Observable<void> {
-    return this.api.cadastrar(mesaDTO);
+    return this.api.cadastrar(mesaDTO.numero);
   }
 
   adquirirPorEstabelecimento(): Observable<Array<MesaDTO>> {
     return this.api.adquirirPorEstabelecimento();
+  }
+
+  editar(mesaDTO: MesaDTO): Observable<void> {
+    return this.api.editar(mesaDTO);
+  }
+
+  excluir(codigoMesa: number): Observable<void> {
+    return this.api.excluir(codigoMesa);
   }
 }

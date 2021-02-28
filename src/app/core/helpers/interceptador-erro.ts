@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { AutenticacaoService } from '../service/autenticacao.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../service/snackbar.service';
+import { RotasConstant } from 'src/app/shared/constants/rotas.constant';
 
 
 @Injectable()
@@ -13,10 +14,11 @@ export class InterceptadorErro implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError((err:HttpErrorResponse) => {
-            debugger;
+            
             if(err.status === 0){
-                this.router.navigate(['/sem-conexao']);
+                this.router.navigate([RotasConstant.SEM_CONEXAO]);
             } else if (err.status === 401 || err.status === 403) {
+                this.router.navigate([RotasConstant.LOGIN]);
                 this.autenticacaoService.logout();
                 location.reload(true);
 

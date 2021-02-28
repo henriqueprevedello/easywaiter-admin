@@ -5,6 +5,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
+import { RotasConstant } from 'src/app/shared/constants/rotas.constant';
 import { AutenticacaoService } from '../service/autenticacao.service';
 
 @Injectable({ providedIn: 'root' })
@@ -20,7 +21,9 @@ export class AutenticacaoGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    this.router.navigate([RotasConstant.LOGIN], {
+      queryParams: { returnUrl: state.url },
+    });
 
     return false;
   }

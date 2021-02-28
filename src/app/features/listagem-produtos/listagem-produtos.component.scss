@@ -12,12 +12,36 @@ table {
   font-size: 20px;
 }
 
-.ativo {
-  background-color: green;
-  text-align: center;
+.div-pesquisar {
+  width: 30%;
+  mat-form-field {
+    width: 100%;
+  }
 }
 
-.inativo {
-  background-color: red;
-  text-align: center;
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.mat-column-descricao {
+  padding-right: 10px;
+  width: 38% !important;
+}
+
+.mat-column-ativo {
+  width: 10%;
+}
+
+.mat-column-categoria {
+  width: 13%;
+}
+
+.mat-column-valor {
+  width: 15%;
 }

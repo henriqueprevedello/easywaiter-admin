@@ -20,10 +20,10 @@ export class ListagemComandasComponent implements OnInit {
   }
 
   atualizar(){
-    this.comandaFacade.adquirirTodas().subscribe(todasComandas => {
-      debugger;
+    this.comandaFacade.adquirirTodas().subscribe(todasComandas => 
+      
       (this.comandas = todasComandas)
-    });
+    );
   }
 
 }

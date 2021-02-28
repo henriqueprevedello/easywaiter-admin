@@ -18,4 +18,8 @@ export class CategoriaFacade {
   editar(categoriaDTO: CategoriaDTO): Observable<void> {
     return this.api.editar(categoriaDTO);
   }
+
+  excluir(codigoCategoria: number): Observable<void> {
+    return this.api.excluir(codigoCategoria);
+  }
 }

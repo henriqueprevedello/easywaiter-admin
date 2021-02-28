@@ -57,7 +57,7 @@ export class EstabelecimentoComponent implements OnInit {
   }
 
   editar(): void {
-    debugger;
+    
     this.estabelecimentoFacade
       .editar(this.options.value)
       .pipe(take(1))

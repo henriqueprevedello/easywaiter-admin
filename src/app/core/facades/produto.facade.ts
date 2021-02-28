@@ -11,8 +11,11 @@ export class ProdutoFacade {
     return this.api.adicionar(produtoDTO);
   }
 
-  adquirir(): Observable<Array<ProdutoDTO>> {
-    return this.api.adquirir();
+  adquirirTodos(): Observable<Array<ProdutoDTO>> {
+    return this.api.adquirirTodos();
   }
 
+  adquirir(codigoProduto: string): Observable<ProdutoDTO> {
+    return this.api.adquirir(codigoProduto);
+  }
 }

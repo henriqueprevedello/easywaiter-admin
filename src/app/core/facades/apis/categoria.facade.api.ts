@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EndpointsConstants } from 'src/app/shared/constants/endpoints.constant';
 import { CategoriaDTO } from 'src/app/models/categoria.dto';
@@ -19,6 +19,15 @@ export class CategoriaFacadeApi {
   }
 
   editar(categoriaDTO: CategoriaDTO): Observable<void> {
-    return this.http.post<void>(EndpointsConstants.CATEGORIA.EDITAR, categoriaDTO);
+    return this.http.put<void>(EndpointsConstants.CATEGORIA.EDITAR, categoriaDTO);
+  }
+
+  excluir(codigoCategoria: number): Observable<void> {
+    const params = new HttpParams().set(
+      'codigoCategoria',
+      codigoCategoria.toString()
+    );
+
+    return this.http.delete<void>(EndpointsConstants.CATEGORIA.EXCLUIR, {params});
   }
 }
