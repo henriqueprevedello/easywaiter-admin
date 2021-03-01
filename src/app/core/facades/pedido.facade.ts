@@ -1,13 +1,13 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { PedidoFacadeApi } from './apis/pedido.facade.api';
-import { PedidoExporDTO } from 'src/app/models/pedido-expor.dto';
+import { PedidoDTO } from 'src/app/models/pedido.dto';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoFacade {
   constructor(private api: PedidoFacadeApi) {}
 
-  adquirirNaoFinalizados(): Observable<Array<PedidoExporDTO>> {
+  adquirirNaoFinalizados(): Observable<Array<PedidoDTO>> {
     return this.api.adquirirNaoFinalizados();
   }
 

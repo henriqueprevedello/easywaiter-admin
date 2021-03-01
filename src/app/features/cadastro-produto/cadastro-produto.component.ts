@@ -12,6 +12,7 @@ import { CategoriaFacade } from 'src/app/core/facades/categoria.facade';
 import { ProdutoFacade } from 'src/app/core/facades/produto.facade';
 import { SnackbarService } from 'src/app/core/service/snackbar.service';
 import { CategoriaDTO } from 'src/app/models/categoria.dto';
+import { ProdutoDTO } from 'src/app/models/produto.dto';
 import { RotasConstant } from 'src/app/shared/constants/rotas.constant';
 import { StringConstant } from 'src/app/shared/constants/string.constant';
 
@@ -65,16 +66,12 @@ export class CadastroProdutoComponent implements OnInit {
           if (codigoProduto) {
             return this.produtoFacade.adquirir(codigoProduto).pipe(
               tap((produto) => {
-                debugger;
                 this.options.get('id').setValue(produto.id);
                 this.options.get('ativo').setValue(produto.ativo);
-                this.options.get('categoria').setValue(produto.categoria);
+                this.options.get('categoria').setValue(produto.categoria.id);
                 this.options.get('descricao').setValue(produto.descricao);
                 this.options.get('nome').setValue(produto.nome);
                 this.options.get('valor').setValue(produto.valor);
-
-                this.options.markAsPristine();
-                this.options.markAsPending();
               })
             );
           }
@@ -98,9 +95,11 @@ export class CadastroProdutoComponent implements OnInit {
   }
 
   cadastrar(): void {
-    debugger;
+    let produtoDTO: ProdutoDTO = this.options.value;
+    produtoDTO.categoria = { id: this.options.value.categoria, nome: null };
+
     this.produtoFacade
-      .adicionar(this.options.value)
+      .cadastrar(produtoDTO)
       .pipe(take(1))
       .subscribe(() => {
         this.options.reset();
@@ -109,15 +108,19 @@ export class CadastroProdutoComponent implements OnInit {
       });
   }
 
-  editar = () =>
+  editar() {
+    let produtoDTO: ProdutoDTO = this.options.value;
+    produtoDTO.categoria = { id: this.options.value.categoria, nome: null };
+
     this.produtoFacade
-      .editar(this.options.value)
+      .editar(produtoDTO)
       .pipe(take(1))
       .subscribe(() => {
         this.options.reset();
         this.router.navigate([RotasConstant.PRODUTOS]);
         this.snackbarService.exibir('Produto editado com sucesso!');
       });
+  }
 
   excluir = () =>
     this.produtoFacade

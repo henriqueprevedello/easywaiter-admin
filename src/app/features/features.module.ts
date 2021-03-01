@@ -31,6 +31,8 @@ import { ListagemCategoriasComponent } from './listagem-categorias/listagem-cate
 import { SemConexaoComponent } from './sem-conexao/sem-conexao.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
+import { DetalharComandaComponent } from './detalhar-comanda/detalhar-comanda.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { MatListModule } from '@angular/material/list';
     CadastroCategoriaComponent,
     ListagemCategoriasComponent,
     SemConexaoComponent,
+    DetalharComandaComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +72,7 @@ import { MatListModule } from '@angular/material/list';
     MatCheckboxModule,
     MatButtonModule,
     MatGridListModule,
+    MatTabsModule,
   ],
   exports: [DashboardComponent, LoginPageComponent, NaoEncontradoComponent],
 })

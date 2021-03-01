@@ -2,14 +2,14 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EndpointsConstants } from 'src/app/shared/constants/endpoints.constant';
-import { PedidoExporDTO } from 'src/app/models/pedido-expor.dto';
+import { PedidoDTO } from 'src/app/models/pedido.dto';
 
 @Injectable({ providedIn: 'root' })
 export class PedidoFacadeApi {
   constructor(private http: HttpClient) {}
 
-  adquirirNaoFinalizados(): Observable<Array<PedidoExporDTO>> {
-    return this.http.get<Array<PedidoExporDTO>>(
+  adquirirNaoFinalizados(): Observable<Array<PedidoDTO>> {
+    return this.http.get<Array<PedidoDTO>>(
       EndpointsConstants.PEDIDO.ADQUIRIR_NAO_FINALIZADOS
     );
   }

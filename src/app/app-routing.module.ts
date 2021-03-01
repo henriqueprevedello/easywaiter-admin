@@ -15,6 +15,7 @@ import { CadastroProdutoComponent } from './features/cadastro-produto/cadastro-p
 import { SemConexaoComponent } from './features/sem-conexao/sem-conexao.component';
 import { SuporteComponent } from './features/suporte/suporte.component';
 import { DefaultComponent } from './layouts/default/default.component';
+import { DetalharComandaComponent } from './features/detalhar-comanda/detalhar-comanda.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'comandas',
         component: ListagemComandasComponent,
+      },
+      {
+        path: 'detalhar-comanda',
+        component: DetalharComandaComponent,
       },
       {
         path: 'suporte',

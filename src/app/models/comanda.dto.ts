@@ -9,5 +9,6 @@ export class ComandaDTO {
     dataAbertura: string;
     dataFechamento: string;
     pedidos: Array<PedidoDTO>
-    cliente: ClienteDTO
+    cliente: ClienteDTO;
+    valorTotal: number;
 }

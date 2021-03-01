@@ -11,4 +11,8 @@ export class ComandaFacade {
     return this.api.adquirirTodas();
   }
 
+  adquirir(codigoComanda: string): Observable<ComandaDTO> {
+    return this.api.adquirir(codigoComanda);
+  }
+
 }

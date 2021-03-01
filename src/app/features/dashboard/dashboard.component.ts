@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { PedidoFacade } from 'src/app/core/facades/pedido.facade';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
-import { PedidoExporDTO } from 'src/app/models/pedido-expor.dto';
 import { PedidoItemDTO } from 'src/app/models/pedido-item.dto';
 import { PedidoDTO } from 'src/app/models/pedido.dto';
 import { StatusPedidoEnum } from 'src/app/shared/enums/status-pedido.enum';
@@ -17,7 +16,7 @@ import { StatusPedidoEnum } from 'src/app/shared/enums/status-pedido.enum';
 export class DashboardComponent implements OnInit {
   descricaoBotaoProsseguir = 'Prosseguir';
 
-  dataSource: Array<PedidoExporDTO> = [];
+  dataSource: Array<PedidoDTO> = [];
   comandas: Array<ComandaDTO> = [];
   columnsToDisplay = [
     'id',
@@ -26,7 +25,7 @@ export class DashboardComponent implements OnInit {
     'nomeCliente',
     'dataCadastro',
   ];
-  pedidoExpandido: PedidoExporDTO | null;
+  pedidoExpandido: PedidoDTO;
 
   botoesDesativados = false;
 
@@ -36,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {}
 
-  private alimentarPedidos(): Observable<Array<PedidoExporDTO>> {
+  private alimentarPedidos(): Observable<Array<PedidoDTO>> {
     return this.pedidoFacade.adquirirNaoFinalizados().pipe(
       tap((listaPedidos) => (this.dataSource = listaPedidos)),
       catchError((excecao) => (this.dataSource = []))
@@ -152,7 +151,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  onExpandPedido(pedido: PedidoExporDTO) {
+  onExpandPedido(pedido: PedidoDTO) {
     this.descricaoBotaoProsseguir = this.exibirProximoStatusProsseguir(
       pedido.codigoStatus
     );

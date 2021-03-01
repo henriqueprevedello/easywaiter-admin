@@ -1,64 +1,76 @@
 <div id="comandas">
-    <div
-      class="header"
-      fxLayout="column"
-      fxLayoutAlign="center center"
-      fxLayout.gt-sm="row"
-      fxLayoutAlign.gt-sm="space-between center"
-    >
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <mat-icon> content_paste </mat-icon>
-        <span class="titulo"> Comandas </span>
-      </div>
-  
-      <div>
-        <div fxFlex fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon>search</mat-icon>
-          <input placeholder="Pesquisar por comandas" />
-        </div>
-      </div>
-
-      <button mat-raised-button (click)="atualizar()">
-        <span>Atualizar</span>
-      </button>
-  
+  <div
+    class="header"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayout.gt-sm="row"
+    fxLayoutAlign.gt-sm="space-between center"
+  >
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon> content_paste </mat-icon>
+      <span class="titulo"> Comandas </span>
     </div>
-  
-    <table mat-table [dataSource]="comandas" class="mat-elevation-z8">
-    
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="mesa">
-        <th mat-header-cell *matHeaderCellDef> Mesa </th>
-        <td mat-cell *matCellDef="let element"> {{element.mesa.numero}} </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="nomeCliente">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.cliente.usuario.nome}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="numeroPedidos">
-        <th mat-header-cell *matHeaderCellDef> Número de pedidos </th>
-        <td mat-cell *matCellDef="let element"> {{element.pedidos.length }} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="dataAbertura">
-        <th mat-header-cell *matHeaderCellDef> Abertura da comanda </th>
-        <td mat-cell *matCellDef="let element"> {{ element.dataAbertura.replaceAll("T", " ").replaceAll("+00:00", "") }} </td>
-      </ng-container>
 
-      <ng-container matColumnDef="dataFechamento">
-        <th mat-header-cell *matHeaderCellDef> Fechamento da comanda </th>
-        <td mat-cell *matCellDef="let element"> {{element.dataFechamento ? element.dataFechamento : 'Em aberto'}} </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
+    <div fxLayout="row" fxLayoutAlign="start center" class="div-pesquisar">
+      <mat-form-field>
+        <mat-label>Pesquisar</mat-label>
+        <input
+          matInput
+          (keyup)="aplicarFiltro($event)"
+          placeholder="Comanda"
+          #input
+        />
+      </mat-form-field>
+    </div>
+
+    <div></div>
   </div>
-  
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="mesa">
+      <th mat-header-cell *matHeaderCellDef>Mesa</th>
+      <td mat-cell *matCellDef="let element">{{ element.mesa.numero }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nomeCliente">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.cliente.usuario.nome }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="numeroPedidos">
+      <th mat-header-cell *matHeaderCellDef>Número de pedidos</th>
+      <td mat-cell *matCellDef="let element">{{ element.pedidos.length }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dataAbertura">
+      <th mat-header-cell *matHeaderCellDef>Abertura da comanda</th>
+      <td mat-cell *matCellDef="let element">{{ element.dataAbertura }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dataFechamento">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dataFechamento ? "Fechada" : "Em aberto" }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [routerLink]="['/detalhar-comanda/', row]"
+    ></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        Não foi encontrado resultados para "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+</div>

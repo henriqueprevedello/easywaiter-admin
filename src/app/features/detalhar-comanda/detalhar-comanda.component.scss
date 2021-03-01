@@ -1,0 +1,104 @@
+.header {
+  margin-bottom: 5px;
+}
+.titulo {
+  line-height: 24px;
+  margin-left: 8px;
+  font-size: 20px;
+}
+
+.buttons button {
+  margin: 10px;
+}
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+.mat-tab-labels {
+  display: flex;
+}
+
+.example-large-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.example-large-box {
+  width: calc(100% - 32px);
+}
+
+mat-list,
+table {
+  width: 100%;
+}
+
+.expandido {
+  background-color: #3a3440;
+}
+
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.element-row.expanded-row {
+  background: #3a3440;
+}
+
+tr.element-row:hover {
+  background: lightslategray;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.element-row td {
+  border-bottom-width: 0;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.element-description {
+  padding: 16px;
+}
+
+.element-description-attribution {
+  opacity: 0.5;
+}
+
+.linha-botoes {
+  margin: 5px 5px 20px 5px;
+
+  button {
+    margin: 0 7px;
+  }
+}

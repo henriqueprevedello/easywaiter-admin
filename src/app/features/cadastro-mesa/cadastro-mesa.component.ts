@@ -41,7 +41,6 @@ export class CadastroMesaComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     this.activatedRoute.paramMap.pipe(take(1)).subscribe((params) => {
       if (params && params.get('id')) {
         this.tipoPagina = StringConstant.EDICAO;
