@@ -25,7 +25,6 @@ export class ListagemMesasComponent implements OnInit {
   aplicarFiltro(event: Event) {
     this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
 
-    debugger;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

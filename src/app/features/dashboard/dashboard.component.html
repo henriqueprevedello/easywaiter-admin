@@ -4,41 +4,33 @@
   fxLayoutGap="20px"
   class="stats-cards"
 >
-  <mat-card fxFlex="25">
+  <mat-card fxFlex="33.33">
     <app-widget-card-info
       label="Aguardando confirmação"
       [total]="aguardandoConfirmacao"
       icone="notification_important"
-      [corIcone]="adquirirCorIcone(0, 5)"
+      [corIcone]="adquirirCorIcone(1, aguardandoConfirmacao)"
     ></app-widget-card-info>
   </mat-card>
-  <mat-card fxFlex="25">
+
+  <mat-card fxFlex="33.33">
+    <app-widget-card-info
+      label="Pedidos em andamento"
+      [total]="pedidosEmAndamento"
+      icone="fiber_new"
+      [corIcone]="adquirirCorIcone(5, pedidosEmAndamento)"
+    ></app-widget-card-info>
+  </mat-card>
+
+  <mat-card fxFlex="33.33">
     <app-widget-card-info
       label="Comandas abertas"
       [total]="comandasAbertas"
       icone="warning"
-      [corIcone]="adquirirCorIcone(4, 10)"
-    ></app-widget-card-info>
-  </mat-card>
-  <mat-card fxFlex="25">
-    <app-widget-card-info
-      label="Total de comandas"
-      [total]="totalComandas"
-      icone="fact_check"
-      [corIcone]="adquirirCorIcone(30, 43)"
-    ></app-widget-card-info>
-  </mat-card>
-  <mat-card fxFlex="25">
-    <app-widget-card-info
-      label="Produtos vendidos"
-      [total]="produtosVendidos"
-      icone="fiber_new"
-      [corIcone]="adquirirCorIcone(100, 85)"
+      [corIcone]="adquirirCorIcone(10, comandasAbertas)"
     ></app-widget-card-info>
   </mat-card>
 </div>
-
-<br />
 
 <mat-divider></mat-divider>
 
@@ -91,21 +83,36 @@
         *ngIf="element == pedidoExpandido"
         class="example-element-detail row"
       >
-        <mat-list #itens >
-          <mat-list-item  *ngFor="let pedidoItem of element.pedidoItens" >
+        <mat-list #itens>
+          <mat-list-item *ngFor="let pedidoItem of element.pedidoItens">
             <div mat-line>{{ adquirirDescricaoItem(pedidoItem) }}</div>
-            <div *ngIf="pedidoItem.observacao" mat-line > Observação: {{pedidoItem.observacao}} </div>
+            <div *ngIf="pedidoItem.observacao" mat-line>
+              Observação: {{ pedidoItem.observacao }}
+            </div>
           </mat-list-item>
         </mat-list>
-
       </div>
       <div
         class="row linha-botoes"
         fxLayoutAlign="center center"
         *ngIf="element == pedidoExpandido"
       >
-        <button mat-raised-button (click)="prosseguirPedido()" color="accent" [disabled]="botaoProsseguirDesativado">{{ descricaoBotaoProsseguir }}</button>
-        <button mat-raised-button (click)="recusarPedido()" color="warn" [disabled]="botaoRecusarDesativado">RECUSAR</button>
+        <button
+          mat-raised-button
+          (click)="prosseguirPedido()"
+          color="accent"
+          [disabled]="botaoProsseguirDesativado"
+        >
+          {{ descricaoBotaoProsseguir }}
+        </button>
+        <button
+          mat-raised-button
+          (click)="recusarPedido()"
+          color="warn"
+          [disabled]="botaoRecusarDesativado"
+        >
+          RECUSAR
+        </button>
       </div>
     </td>
   </ng-container>

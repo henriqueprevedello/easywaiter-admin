@@ -21,4 +21,12 @@ export class ComandaFacadeApi {
       params,
     });
   }
+
+  pagar(codigoComanda: string): Observable<void> {
+    const params = new HttpParams().set('codigoComanda', codigoComanda);
+
+    return this.http.post<void>(
+      EndpointsConstants.COMANDA.PAGAR, null, {params}
+    );
+  }
 }

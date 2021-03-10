@@ -7,4 +7,5 @@ export class RotasConstant {
     static readonly CATEGORIAS = 'categorias';
     static readonly MESAS = 'mesas';
     static readonly PRODUTOS = 'produtos';
+    static readonly COMANDAS = 'comandas';
 }

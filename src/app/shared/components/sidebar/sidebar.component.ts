@@ -9,10 +9,10 @@ import { UsuarioDTO } from 'src/app/models/usuario.dto';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  usuarioAtual: Observable<UsuarioDTO>;
+  usuarioAtual: UsuarioDTO;
 
   constructor(private autenticacaoService: AutenticacaoService) {
-    this.usuarioAtual = autenticacaoService.usuarioAtual;
+    this.usuarioAtual = autenticacaoService.usuarioAtualDTO;
   }
 
   ngOnInit() {}

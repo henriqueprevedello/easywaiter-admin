@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
 import { PedidoFacade } from 'src/app/core/facades/pedido.facade';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
 import { PedidoItemDTO } from 'src/app/models/pedido-item.dto';
@@ -29,8 +29,17 @@ export class DashboardComponent implements OnInit {
 
   botoesDesativados = false;
 
-  constructor(private pedidoFacade: PedidoFacade, private router: Router) {
-    this.alimentarPedidos().pipe(take(1)).subscribe();
+  constructor(
+    private pedidoFacade: PedidoFacade,
+    private comandaFacade: ComandaFacade
+  ) {
+    this.alimentarPedidos()
+      .pipe(
+        switchMap(() => comandaFacade.adquirirTodas()),
+        tap(comandasAbertas => this.comandas = comandasAbertas),
+        take(1)
+      )
+      .subscribe();
   }
 
   ngOnInit() {}
@@ -48,10 +57,10 @@ export class DashboardComponent implements OnInit {
     } else if (valorAtual > valorBase * 2) {
       return 'orange';
     } else if (valorAtual > valorBase) {
-      return 'yellow';
+      return 'lightskyblue';
     }
 
-    return 'lightskyblue';
+    return 'lawngreen';
   }
 
   exibirStatus(codigoStatus: number): string {
@@ -119,12 +128,8 @@ export class DashboardComponent implements OnInit {
     return this.comandas.filter((comanda) => !comanda.dataFechamento).length;
   }
 
-  get totalComandas(): number {
-    return this.comandas.length;
-  }
-
-  get produtosVendidos(): number {
-    return 0;
+  get pedidosEmAndamento(): number {
+    return this.dataSource.length;
   }
 
   get botaoProsseguirDesativado(): boolean {

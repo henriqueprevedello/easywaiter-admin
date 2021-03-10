@@ -1,9 +1,9 @@
 <mat-nav-list>
-    <div class="profile-card" *ngIf="(usuarioAtual | async) as usuario">
+    <div class="profile-card" *ngIf="usuarioAtual">
         <img src="https://revistadeguste.com/wp-content/uploads/2019/12/GV4A3152.jpg" >
         <div class="header">
-            <h1>Restaurante Exemplo</h1>
-            <h4>restaurante@exemplo.com</h4>
+            <h1>{{ usuarioAtual.nome}}</h1>
+            <h4>{{ usuarioAtual.email}}</h4>
         </div>
     </div>
 
