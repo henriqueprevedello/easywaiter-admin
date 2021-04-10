@@ -15,8 +15,8 @@ export class ComandaFacade {
     return this.api.adquirir(codigoComanda);
   }
 
-  pagar(codigoComanda: string):Observable<void> {
-    return this.api.pagar(codigoComanda);
+  confirmarPagamento(codigoComanda: string):Observable<void> {
+    return this.api.confirmarPagamento(codigoComanda);
   }
 
 }

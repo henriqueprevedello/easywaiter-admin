@@ -25,7 +25,7 @@ export class EndpointsConstants {
   static readonly COMANDA = {
     ADQUIRIR: URL_CONTROLLER_COMANDA,
     ADQUIRIR_TODAS: URL_CONTROLLER_COMANDA.concat('/adquirirTodas'),
-    PAGAR: URL_CONTROLLER_COMANDA.concat('/pagar')
+    CONFIRMAR_PAGAMENTO: URL_CONTROLLER_COMANDA.concat('/confirmarPagamento')
   };
 
   static readonly PEDIDO = {

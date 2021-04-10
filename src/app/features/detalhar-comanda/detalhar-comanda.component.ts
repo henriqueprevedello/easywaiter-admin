@@ -101,9 +101,9 @@ export class DetalharComandaComponent implements OnInit {
     });
   }
 
-  pagarComanda() {
+  confirmarPagamento() {
     this.comandaFacade
-      .pagar(this.comanda.id.toString())
+      .confirmarPagamento(this.comanda.id.toString())
       .pipe(
         take(1),
         catchError((error) => {
