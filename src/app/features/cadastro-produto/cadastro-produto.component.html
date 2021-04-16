@@ -90,14 +90,16 @@
         <div>
           <img src="{{ imagem }}" />
         </div>
+
+        <div class="remover-imagem" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="arquivo">
+          <h3>{{ fileName }}</h3>
+          <button mat-flat-button color="warn" (click)="removerImagem()">
+            Remover imagem
+          </button>
+        </div>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="arquivo">
-        <h3>{{ fileName }}</h3>
-        <button mat-flat-button color="warn" (click)="removerImagem()">
-          Remover imagem
-        </button>
-      </div>
+      
     </div>
   </form>
 </div>
