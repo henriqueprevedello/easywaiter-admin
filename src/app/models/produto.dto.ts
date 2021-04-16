@@ -7,4 +7,5 @@ export class ProdutoDTO {
     valor: number;
     ativo: boolean;
     categoria: CategoriaDTO;
+    nomeImagem: string;
 }

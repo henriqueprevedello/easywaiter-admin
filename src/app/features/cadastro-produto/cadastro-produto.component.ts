@@ -10,6 +10,7 @@ import { of, throwError } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CategoriaFacade } from 'src/app/core/facades/categoria.facade';
 import { ProdutoFacade } from 'src/app/core/facades/produto.facade';
+import { ArquivoFacade } from 'src/app/core/facades/arquivo.facade';
 import { SnackbarService } from 'src/app/core/service/snackbar.service';
 import { CategoriaDTO } from 'src/app/models/categoria.dto';
 import { ProdutoDTO } from 'src/app/models/produto.dto';
@@ -21,6 +22,10 @@ import { StringConstant } from 'src/app/shared/constants/string.constant';
   styleUrls: ['./cadastro-produto.component.scss'],
 })
 export class CadastroProdutoComponent implements OnInit {
+  fileName = null;
+  arquivo = null;
+  imagem = null;
+
   categorias: Array<CategoriaDTO> = [];
   options: FormGroup;
   tipoPagina = StringConstant.CADASTRO;
@@ -33,12 +38,13 @@ export class CadastroProdutoComponent implements OnInit {
   categoriaControl = new FormControl();
 
   constructor(
-    private formBuilder: FormBuilder,
+    protected formBuilder: FormBuilder,
     private produtoFacade: ProdutoFacade,
     private categoriaFacade: CategoriaFacade,
     private router: Router,
     private snackbarService: SnackbarService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private arquivoFacade: ArquivoFacade
   ) {
     this.options = formBuilder.group({
       id: this.idControl,
@@ -98,11 +104,16 @@ export class CadastroProdutoComponent implements OnInit {
     let produtoDTO: ProdutoDTO = this.options.value;
     produtoDTO.categoria = { id: this.options.value.categoria, nome: null };
 
-    this.produtoFacade
-      .cadastrar(produtoDTO)
-      .pipe(take(1))
+    this.arquivoFacade
+      .upload(this.arquivo)
+      .pipe(
+        tap((nomeImagem) => (produtoDTO.nomeImagem = nomeImagem)),
+        switchMap(() => this.produtoFacade.cadastrar(produtoDTO)),
+        take(1)
+      )
       .subscribe(() => {
         this.options.reset();
+        this.removerImagem();
         this.router.navigate([RotasConstant.PRODUTOS]);
         this.snackbarService.exibir('Produto cadastrado com sucesso!');
       });
@@ -131,4 +142,26 @@ export class CadastroProdutoComponent implements OnInit {
         this.router.navigate([RotasConstant.PRODUTOS]);
         this.snackbarService.exibir('Produto excluído com sucesso!');
       });
+
+  selecionouArquivo(event: any) {
+    if (!event.target.files || !event.target.files[0]) {
+      return;
+    }
+
+    this.arquivo = event.target.files[0];
+
+    this.fileName = this.arquivo.name;
+
+    let reader = new FileReader();
+
+    reader.onload = (e: any) => (this.imagem = e.target.result);
+
+    reader.readAsDataURL(this.arquivo);
+  }
+
+  removerImagem() {
+    this.arquivo = null;
+    this.imagem = null;
+    this.fileName = null;
+  }
 }

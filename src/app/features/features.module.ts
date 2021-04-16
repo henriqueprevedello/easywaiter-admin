@@ -33,6 +33,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { DetalharComandaComponent } from './detalhar-comanda/detalhar-comanda.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatButtonModule,
     MatGridListModule,
     MatTabsModule,
+    MatToolbarModule
   ],
   exports: [DashboardComponent, LoginPageComponent, NaoEncontradoComponent],
 })

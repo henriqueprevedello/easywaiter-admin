@@ -5,18 +5,16 @@
   fxLayout.gt-sm="row"
   fxLayoutAlign.gt-sm="space-between center"
 >
-<div fxLayout="row" fxLayoutAlign="start center">
-  <mat-icon> library_add </mat-icon>
-  <span class="titulo">
-    {{ tipoPagina == "edicao" ? "Edição" : "Cadastro" }} de produto
-  </span>
-</div>
-
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon> library_add </mat-icon>
+    <span class="titulo">
+      {{ tipoPagina == "edicao" ? "Edição" : "Cadastro" }} de produto
+    </span>
+  </div>
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">
   <form [formGroup]="options">
-    
     <p>
       <mat-form-field appearance="standard">
         <mat-label>Nome</mat-label>
@@ -60,18 +58,47 @@
       <mat-form-field appearance="fill">
         <mat-label>Categoria</mat-label>
         <mat-select [formControl]="categoriaControl" required>
-          <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
-            {{categoria.nome}}
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.id"
+          >
+            {{ categoria.nome }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="categoriaControl.hasError('required')">Por favor selecione uma categoria</mat-error>
-        <mat-hint>{{categoriaControl.value?.sound}}</mat-hint>
+        <mat-error *ngIf="categoriaControl.hasError('required')"
+          >Por favor selecione uma categoria</mat-error
+        >
+        <mat-hint>{{ categoriaControl.value?.sound }}</mat-hint>
       </mat-form-field>
     </p>
 
     <p>
       <mat-checkbox [formControl]="ativoControl">Ativo</mat-checkbox>
     </p>
+
+    <div>
+      <div *ngIf="!arquivo">
+        <input
+          id="uploadFile"
+          type="file"
+          (change)="selecionouArquivo($event)"
+          accept="image/*"
+        />
+      </div>
+
+      <div class="card-footer" *ngIf="arquivo">
+        <div>
+          <img src="{{ imagem }}" />
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="arquivo">
+        <h3>{{ fileName }}</h3>
+        <button mat-flat-button color="warn" (click)="removerImagem()">
+          Remover imagem
+        </button>
+      </div>
+    </div>
   </form>
 </div>
 

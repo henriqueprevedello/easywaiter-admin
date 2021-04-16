@@ -8,8 +8,15 @@ const URL_CONTROLLER_MESA = `${URL_EASY_WAITER_SERVER}/mesa`;
 const URL_CONTROLLER_CATEGORIA = `${URL_EASY_WAITER_SERVER}/categoria`;
 const URL_CONTROLLER_CONEXAO = `${URL_EASY_WAITER_SERVER}/conexao`;
 const URL_CONTROLLER_ESTABELECIMENTO = `${URL_EASY_WAITER_SERVER}/estabelecimento`;
+const URL_CONTROLLER_ARQUIVO = `${URL_EASY_WAITER_SERVER}/arquivo`;
 
 export class EndpointsConstants {
+
+  static readonly ARQUIVO = {
+    UPLOAD: URL_CONTROLLER_ARQUIVO.concat('/upload'),
+    DOWNLOAD: URL_CONTROLLER_ARQUIVO.concat('/files/'),
+  };
+
   static readonly AUTENTICACAO = {
     LOGIN: URL_CONTROLLER_AUTENTICACAO,
   };
