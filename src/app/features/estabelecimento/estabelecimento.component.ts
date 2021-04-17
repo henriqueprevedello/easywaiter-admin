@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { take } from 'rxjs/operators';
-import { EstabelecimentoFacadeApi } from 'src/app/core/facades/apis/estabelecimento.facade.api';
 import { EstabelecimentoFacade } from 'src/app/core/facades/estabelecimento.facade';
 import { SnackbarService } from 'src/app/core/service/snackbar.service';
 import { EstabelecimentoDTO } from 'src/app/models/estabelecimento.dto';

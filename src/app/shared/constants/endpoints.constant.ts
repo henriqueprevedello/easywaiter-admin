@@ -14,7 +14,7 @@ export class EndpointsConstants {
 
   static readonly ARQUIVO = {
     UPLOAD: URL_CONTROLLER_ARQUIVO.concat('/upload'),
-    DOWNLOAD: URL_CONTROLLER_ARQUIVO.concat('/files/'),
+    DOWNLOAD: URL_CONTROLLER_ARQUIVO.concat('/'),
   };
 
   static readonly AUTENTICACAO = {

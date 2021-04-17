@@ -16,8 +16,4 @@ export class ArquivoFacadeApi {
     return this.http.post<StringDTO>(EndpointsConstants.ARQUIVO.UPLOAD, formData);
   }
 
-  download(nomeArquivo: string): Observable<any> {
-
-    return this.http.get(EndpointsConstants.ARQUIVO.DOWNLOAD.concat(nomeArquivo), { responseType: 'blob' });
-  }
 }

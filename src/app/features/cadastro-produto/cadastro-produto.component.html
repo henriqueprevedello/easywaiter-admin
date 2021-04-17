@@ -77,7 +77,7 @@
     </p>
 
     <div>
-      <div *ngIf="!arquivo">
+      <div *ngIf="!imagem">
         <input
           id="uploadFile"
           type="file"
@@ -91,7 +91,7 @@
           <img src="{{ imagem }}" />
         </div>
 
-        <div class="remover-imagem" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="arquivo">
+        <div class="remover-imagem" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="imagem">
           <h3 *ngIf="fileName">{{ fileName }}</h3>
           <button mat-flat-button color="warn" (click)="removerImagem()">
             Remover imagem

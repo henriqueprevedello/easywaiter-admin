@@ -80,18 +80,12 @@ export class CadastroProdutoComponent implements OnInit {
                 this.options.get('nome').setValue(produto.nome);
                 this.options.get('valor').setValue(produto.valor);
               }),
-              switchMap((produto) =>
-                this.arquivoFacade.download(produto.nomeImagem).pipe(
-                  catchError(() => {
-                    this.snackbarService.exibir(
-                      'Não foi possível carregar a imagem do produto'
-                    );
-
-                    return of(null);
-                  })
-                )
-              ),
-              tap((blobImagem) => this.atribuirArquivo(blobImagem))
+              switchMap(
+                (produto) =>
+                  (this.imagem = this.arquivoFacade.adquirirURLImagem(
+                    produto.imagem
+                  ))
+              )
             );
           }
 
@@ -120,7 +114,7 @@ export class CadastroProdutoComponent implements OnInit {
     this.arquivoFacade
       .upload(this.arquivo)
       .pipe(
-        tap((nomeImagem) => (produtoDTO.nomeImagem = nomeImagem)),
+        tap((nomeImagem) => (produtoDTO.imagem = nomeImagem)),
         switchMap(() => this.produtoFacade.cadastrar(produtoDTO)),
         take(1)
       )
@@ -139,7 +133,7 @@ export class CadastroProdutoComponent implements OnInit {
     this.arquivoFacade
       .upload(this.arquivo)
       .pipe(
-        tap((nomeImagem) => (produtoDTO.nomeImagem = nomeImagem)),
+        tap((nomeImagem) => (produtoDTO.imagem = nomeImagem)),
         switchMap(() => this.produtoFacade.editar(produtoDTO)),
         take(1)
       )
