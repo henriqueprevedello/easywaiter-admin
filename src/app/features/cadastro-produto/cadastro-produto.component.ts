@@ -53,6 +53,7 @@ export class CadastroProdutoComponent implements OnInit {
       valor: this.valorControl,
       ativo: this.ativoControl,
       categoria: this.categoriaControl,
+      nomeImagem: null,
     });
   }
 
@@ -78,7 +79,19 @@ export class CadastroProdutoComponent implements OnInit {
                 this.options.get('descricao').setValue(produto.descricao);
                 this.options.get('nome').setValue(produto.nome);
                 this.options.get('valor').setValue(produto.valor);
-              })
+              }),
+              switchMap((produto) =>
+                this.arquivoFacade.download(produto.nomeImagem).pipe(
+                  catchError(() => {
+                    this.snackbarService.exibir(
+                      'Não foi possível carregar a imagem do produto'
+                    );
+
+                    return of(null);
+                  })
+                )
+              ),
+              tap((blobImagem) => this.atribuirArquivo(blobImagem))
             );
           }
 
@@ -123,9 +136,13 @@ export class CadastroProdutoComponent implements OnInit {
     let produtoDTO: ProdutoDTO = this.options.value;
     produtoDTO.categoria = { id: this.options.value.categoria, nome: null };
 
-    this.produtoFacade
-      .editar(produtoDTO)
-      .pipe(take(1))
+    this.arquivoFacade
+      .upload(this.arquivo)
+      .pipe(
+        tap((nomeImagem) => (produtoDTO.nomeImagem = nomeImagem)),
+        switchMap(() => this.produtoFacade.editar(produtoDTO)),
+        take(1)
+      )
       .subscribe(() => {
         this.options.reset();
         this.router.navigate([RotasConstant.PRODUTOS]);
@@ -148,13 +165,25 @@ export class CadastroProdutoComponent implements OnInit {
       return;
     }
 
-    this.arquivo = event.target.files[0];
+    this.atribuirArquivo(event.target.files[0]);
+  }
+
+  private atribuirArquivo(file: File) {
+    if (!file.size) {
+      this.snackbarService.exibir(
+        'Não foi possível carregar a imagem do produto'
+      );
+
+      return;
+    }
+
+    this.arquivo = file;
 
     this.fileName = this.arquivo.name;
 
     let reader = new FileReader();
 
-    reader.onload = (e: any) => (this.imagem = e.target.result);
+    reader.onload = (e) => (this.imagem = e.target.result);
 
     reader.readAsDataURL(this.arquivo);
   }

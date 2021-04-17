@@ -75,7 +75,7 @@
     <tr
       mat-row
       *matRowDef="let row; columns: displayedColumns"
-      [routerLink]="['/cadastro-produto/', row]"
+      [routerLink]="['/cadastro-produto/', {id: row.id}]"
     ></tr>
 
     <tr class="mat-row" *matNoDataRow>

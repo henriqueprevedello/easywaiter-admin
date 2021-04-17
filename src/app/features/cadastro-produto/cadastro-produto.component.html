@@ -86,13 +86,13 @@
         />
       </div>
 
-      <div class="card-footer" *ngIf="arquivo">
+      <div class="card-footer" *ngIf="imagem">
         <div>
           <img src="{{ imagem }}" />
         </div>
 
         <div class="remover-imagem" fxLayout="row" fxLayoutAlign="space-around center" *ngIf="arquivo">
-          <h3>{{ fileName }}</h3>
+          <h3 *ngIf="fileName">{{ fileName }}</h3>
           <button mat-flat-button color="warn" (click)="removerImagem()">
             Remover imagem
           </button>
