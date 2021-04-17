@@ -14,8 +14,9 @@
       <mat-list-item role="listitem">Mesa {{ comanda.mesa.numero }}</mat-list-item>
       <mat-list-item role="listitem">Comanda {{ comanda.dataFechamento ? "fechada" : "em aberto" }}</mat-list-item>
       <mat-list-item role="listitem">{{ comanda.pedidos.length }} Pedidos</mat-list-item>
-      <mat-list-item role="listitem">{{ pedidosNaoFinalizados }} Pedidos não finalizados</mat-list-item>
+      <mat-list-item role="listitem" *ngIf="pedidosNaoFinalizados > 0">{{ pedidosNaoFinalizados }} Pedidos não finalizados</mat-list-item>
       <mat-list-item role="listitem">Abertura {{ comanda.dataAbertura }}</mat-list-item>
+      <mat-list-item role="listitem">Fechamento {{ comanda.dataFechamento }}</mat-list-item>
     </mat-list>
 
   </div>
@@ -24,7 +25,7 @@
     <h2>Produtos</h2>
 
     <mat-list role="list">
-      <mat-list-item *ngFor="let item of adquirirTodosProdutosDistintos()" role="listitem">{{ item.quantidade }} - {{ item.produto.nome }}</mat-list-item>
+      <mat-list-item *ngFor="let item of adquirirTodosProdutosDistintos()" role="listitem">{{ item.quantidade }}x - {{ item.produto.nome }}</mat-list-item>
     </mat-list>
 
   </div>
@@ -36,7 +37,7 @@
       <mat-list-item role="listitem">Valor: {{ formatarMoeda(comanda.valorTotal) }}</mat-list-item>
     </mat-list>
 
-    <button mat-raised-button (click)="confirmarPagamento()" color="accent">
+    <button mat-raised-button (click)="confirmarPagamento()" color="accent" *ngIf="!comanda.dataFechamento">
       <span>Pagar</span>
     </button>
   </div>

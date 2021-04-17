@@ -14,11 +14,11 @@ export class ListagemComandasComponent implements OnInit {
 
   displayedColumns: string[] = [
     'id',
+    'dataFechamento',
     'mesa',
     'nomeCliente',
     'numeroPedidos',
     'dataAbertura',
-    'dataFechamento',
   ];
 
   constructor(private comandaFacade: ComandaFacade) {}
