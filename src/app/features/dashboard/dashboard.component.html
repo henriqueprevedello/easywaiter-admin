@@ -86,7 +86,7 @@
         <mat-list #itens>
           <mat-list-item *ngFor="let pedidoItem of element.pedidoItens">
             <div mat-line>{{ adquirirDescricaoItem(pedidoItem) }}</div>
-            <div *ngIf="pedidoItem.observacao" mat-line>
+            <div *ngIf="pedidoItem.observacao" mat-line class="div-observacao">
               Observação: {{ pedidoItem.observacao }}
             </div>
           </mat-list-item>
