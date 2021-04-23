@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
 import { PedidoFacade } from 'src/app/core/facades/pedido.facade';
+import { StatusPedidoService } from 'src/app/core/service/status-pedido.service';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
 import { PedidoItemDTO } from 'src/app/models/pedido-item.dto';
 import { PedidoDTO } from 'src/app/models/pedido.dto';
@@ -14,7 +15,7 @@ import { StatusPedidoEnum } from 'src/app/shared/enums/status-pedido.enum';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  descricaoBotaoProsseguir = 'Prosseguir';
+  statusSelecionadoExpandido = StatusPedidoEnum.REALIZADO;
 
   dataSource: Array<PedidoDTO> = [];
   comandas: Array<ComandaDTO> = [];
@@ -31,12 +32,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private pedidoFacade: PedidoFacade,
-    private comandaFacade: ComandaFacade
+    private statusPedidoService: StatusPedidoService,
+    protected comandaFacade: ComandaFacade
   ) {
     this.alimentarPedidos()
       .pipe(
         switchMap(() => comandaFacade.adquirirTodas()),
-        tap(comandasAbertas => this.comandas = comandasAbertas),
+        tap((comandasAbertas) => (this.comandas = comandasAbertas)),
         take(1)
       )
       .subscribe();
@@ -47,7 +49,7 @@ export class DashboardComponent implements OnInit {
   private alimentarPedidos(): Observable<Array<PedidoDTO>> {
     return this.pedidoFacade.adquirirNaoFinalizados().pipe(
       tap((listaPedidos) => (this.dataSource = listaPedidos)),
-      catchError((excecao) => (this.dataSource = []))
+      catchError(() => (this.dataSource = []))
     );
   }
 
@@ -60,35 +62,32 @@ export class DashboardComponent implements OnInit {
       return 'lightskyblue';
     }
 
-    return 'lawngreen';
+    return valorAtual == 0 ? 'lightgrey' : 'lawngreen';
   }
 
-  exibirStatus(codigoStatus: number): string {
-    switch (codigoStatus) {
-      case StatusPedidoEnum.CANCELADO:
-        return 'Cancelado';
+  exibirStatus = (codigoStatus: number) =>
+    this.statusPedidoService.exibirStatus(codigoStatus);
 
-      case StatusPedidoEnum.CONFIRMADO:
-        return 'Confirmado';
+  adquirirStatusDisponiveisParaPedido = (codigoStatus: number) =>
+    this.statusPedidoService.adquirirStatusDisponiveisParaPedido(codigoStatus);
 
-      case StatusPedidoEnum.EM_ENTREGA:
-        return 'Em entrega';
+  adquirirDescricaoItem = (pedidoItem: PedidoItemDTO): string =>
+    `${pedidoItem.quantidade}x ${pedidoItem.produto.nome}`;
 
-      case StatusPedidoEnum.EM_PREPARO:
-        return 'Em preparo';
+  get aguardandoConfirmacao(): number {
+    return this.dataSource.filter(
+      (pedido) => pedido.codigoStatus === StatusPedidoEnum.REALIZADO
+    ).length;
+  }
 
-      case StatusPedidoEnum.ENTREGUE:
-        return 'Entregue';
+  get comandasAguardandoConfirmacao(): number {
+    return this.comandas.filter(
+      (comanda) => comanda.dataFechamento && !comanda.dataPagamento
+    ).length;
+  }
 
-      case StatusPedidoEnum.REALIZADO:
-        return 'Realizado';
-
-      case StatusPedidoEnum.RECUSADO:
-        return 'Recusado';
-
-      default:
-        return 'Desconhecido';
-    }
+  get pedidosEmAndamento(): number {
+    return this.dataSource.length;
   }
 
   prosseguirPedido(): void {
@@ -115,40 +114,6 @@ export class DashboardComponent implements OnInit {
       .subscribe();
   }
 
-  adquirirDescricaoItem = (pedidoItem: PedidoItemDTO): string =>
-    `${pedidoItem.quantidade}x ${pedidoItem.produto.nome}`;
-
-  get aguardandoConfirmacao(): number {
-    return this.dataSource.filter(
-      (pedido) => pedido.codigoStatus === StatusPedidoEnum.REALIZADO
-    ).length;
-  }
-
-  get comandasAbertas(): number {
-    return this.comandas.filter((comanda) => !comanda.dataFechamento).length;
-  }
-
-  get pedidosEmAndamento(): number {
-    return this.dataSource.length;
-  }
-
-  get botaoProsseguirDesativado(): boolean {
-    return (
-      this.botoesDesativados ||
-      this.statusQueNaoPodemProsseguir.includes(
-        this.pedidoExpandido.codigoStatus
-      )
-    );
-  }
-
-  private get statusQueNaoPodemProsseguir(): Array<number> {
-    return [
-      StatusPedidoEnum.CANCELADO,
-      StatusPedidoEnum.ENTREGUE,
-      StatusPedidoEnum.RECUSADO,
-    ];
-  }
-
   get botaoRecusarDesativado(): boolean {
     return (
       this.botoesDesativados ||
@@ -157,29 +122,14 @@ export class DashboardComponent implements OnInit {
   }
 
   onExpandPedido(pedido: PedidoDTO) {
-    this.descricaoBotaoProsseguir = this.exibirProximoStatusProsseguir(
-      pedido.codigoStatus
-    );
-
     this.pedidoExpandido = this.pedidoExpandido === pedido ? null : pedido;
-  }
 
-  exibirProximoStatusProsseguir(codigoStatus: number): string {
-    switch (codigoStatus) {
-      case StatusPedidoEnum.REALIZADO:
-        return 'CONFIRMAR';
+    if(![StatusPedidoEnum.RECUSADO, StatusPedidoEnum.CANCELADO].includes(pedido.codigoStatus)){
+      this.statusSelecionadoExpandido = pedido.codigoStatus + 1;
 
-      case StatusPedidoEnum.CONFIRMADO:
-        return 'PREPARAR';
-
-      case StatusPedidoEnum.EM_PREPARO:
-        return 'ENTREGAR';
-
-      case StatusPedidoEnum.EM_ENTREGA:
-        return 'ENTREGUE';
-
-      default:
-        return 'PROSSEGUIR';
+      return;
     }
+
+    this.statusSelecionadoExpandido = pedido.codigoStatus;
   }
 }

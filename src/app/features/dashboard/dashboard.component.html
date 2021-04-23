@@ -6,7 +6,7 @@
 >
   <mat-card fxFlex="33.33">
     <app-widget-card-info
-      label="Aguardando confirmação"
+      label="Pedidos aguardando confirmação"
       [total]="aguardandoConfirmacao"
       icone="notification_important"
       [corIcone]="adquirirCorIcone(1, aguardandoConfirmacao)"
@@ -24,10 +24,10 @@
 
   <mat-card fxFlex="33.33">
     <app-widget-card-info
-      label="Comandas abertas"
-      [total]="comandasAbertas"
+      label="Comandas em confirmação"
+      [total]="comandasAguardandoConfirmacao"
       icone="warning"
-      [corIcone]="adquirirCorIcone(10, comandasAbertas)"
+      [corIcone]="adquirirCorIcone(1, comandasAguardandoConfirmacao)"
     ></app-widget-card-info>
   </mat-card>
 </div>
@@ -97,14 +97,24 @@
         fxLayoutAlign="center center"
         *ngIf="element == pedidoExpandido"
       >
+        <mat-form-field>
+          <mat-label>Próximo status:</mat-label>
+          <mat-select [(value)]="statusSelecionadoExpandido">
+            <mat-option
+              *ngFor="let statusDisponivel of adquirirStatusDisponiveisParaPedido(pedidoExpandido.codigoStatus)"
+              [value]="statusDisponivel"
+              
+            >
+              {{ exibirStatus(statusDisponivel) }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <button
           mat-raised-button
           (click)="prosseguirPedido()"
           color="accent"
-          [disabled]="botaoProsseguirDesativado"
-        >
-          {{ descricaoBotaoProsseguir }}
-        </button>
+          [disabled]="false"
+        >CONFIRMAR</button>
         <button
           mat-raised-button
           (click)="recusarPedido()"
@@ -131,8 +141,6 @@
     class="example-detail-row"
   ></tr>
   <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" colspan="4">
-      Não há pedidos pendentes
-    </td>
+    <td class="mat-cell" colspan="4">Não há pedidos pendentes</td>
   </tr>
 </table>

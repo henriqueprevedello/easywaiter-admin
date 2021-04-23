@@ -12,6 +12,7 @@ import {
 } from 'rxjs/operators';
 import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
 import { SnackbarService } from 'src/app/core/service/snackbar.service';
+import { StatusPedidoService } from 'src/app/core/service/status-pedido.service';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
 import { PedidoItemDTO } from 'src/app/models/pedido-item.dto';
 import { PedidoDTO } from 'src/app/models/pedido.dto';
@@ -28,7 +29,8 @@ export class DetalharComandaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private comandaFacade: ComandaFacade,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private statusPedidoService: StatusPedidoService
   ) {}
 
   comanda: ComandaDTO;
@@ -59,33 +61,8 @@ export class DetalharComandaComponent implements OnInit {
       .subscribe();
   }
 
-  exibirStatus(codigoStatus: number): string {
-    switch (codigoStatus) {
-      case StatusPedidoEnum.CANCELADO:
-        return 'Cancelado';
-
-      case StatusPedidoEnum.CONFIRMADO:
-        return 'Confirmado';
-
-      case StatusPedidoEnum.EM_ENTREGA:
-        return 'Em entrega';
-
-      case StatusPedidoEnum.EM_PREPARO:
-        return 'Em preparo';
-
-      case StatusPedidoEnum.ENTREGUE:
-        return 'Entregue';
-
-      case StatusPedidoEnum.REALIZADO:
-        return 'Realizado';
-
-      case StatusPedidoEnum.RECUSADO:
-        return 'Recusado';
-
-      default:
-        return 'Desconhecido';
-    }
-  }
+  exibirStatus = (codigoStatus: number) =>
+    this.statusPedidoService.exibirStatus(codigoStatus);
 
   onExpandPedido(pedido: PedidoDTO) {
     this.pedidoExpandido = this.pedidoExpandido === pedido ? null : pedido;
@@ -108,7 +85,7 @@ export class DetalharComandaComponent implements OnInit {
         take(1),
         catchError((error) => {
           this.snackbarService.exibir(error);
-          
+
           return throwError(error);
         }),
         finalize(() => this.router.navigate([RotasConstant.COMANDAS]))
@@ -116,12 +93,9 @@ export class DetalharComandaComponent implements OnInit {
       .subscribe();
   }
 
-  get pedidosNaoFinalizados(): number {
-    return this.comanda.pedidos.filter(
-      (pedido) =>
-        pedido.codigoStatus !== StatusPedidoEnum.CANCELADO &&
-        pedido.codigoStatus !== StatusPedidoEnum.RECUSADO &&
-        pedido.codigoStatus !== StatusPedidoEnum.ENTREGUE
+  get pedidosEmAndamento(): number {
+    return this.comanda.pedidos.filter((pedido) =>
+      this.statusPedidoService.pedidoEstaEmAndamento(pedido.codigoStatus)
     ).length;
   }
 

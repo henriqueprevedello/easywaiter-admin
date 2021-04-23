@@ -6,9 +6,10 @@ export class ComandaDTO {
     id: number;
     nomeCliente: string;
     mesa: MesaDTO;
-    dataAbertura: string;
-    dataFechamento: string;
     pedidos: Array<PedidoDTO>
     cliente: ClienteDTO;
     valorTotal: number;
+    dataAbertura: string;
+    dataFechamento: string;
+    dataPagamento: string;
 }

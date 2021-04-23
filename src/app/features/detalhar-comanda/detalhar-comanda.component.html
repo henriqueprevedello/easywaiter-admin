@@ -14,7 +14,7 @@
       <mat-list-item role="listitem">Mesa {{ comanda.mesa.numero }}</mat-list-item>
       <mat-list-item role="listitem">Comanda {{ comanda.dataFechamento ? "fechada" : "em aberto" }}</mat-list-item>
       <mat-list-item role="listitem">{{ comanda.pedidos.length }} Pedidos</mat-list-item>
-      <mat-list-item role="listitem" *ngIf="pedidosNaoFinalizados > 0">{{ pedidosNaoFinalizados }} Pedidos não finalizados</mat-list-item>
+      <mat-list-item role="listitem" *ngIf="pedidosEmAndamento > 0">{{ pedidosEmAndamento }} pedido(s) em andamento</mat-list-item>
       <mat-list-item role="listitem">Abertura {{ comanda.dataAbertura }}</mat-list-item>
       <mat-list-item role="listitem">Fechamento {{ comanda.dataFechamento }}</mat-list-item>
     </mat-list>
