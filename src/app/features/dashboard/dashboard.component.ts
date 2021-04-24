@@ -90,13 +90,11 @@ export class DashboardComponent implements OnInit {
     return this.dataSource.length;
   }
 
-  prosseguirPedido(): void {
+  atualizarStatusPedido(): void {
     this.dataSource = [];
 
-    this.pedidoExpandido;
-
     this.pedidoFacade
-      .prosseguir(this.pedidoExpandido.id)
+      .atualizarStatus(this.pedidoExpandido.id, this.statusSelecionadoExpandido)
       .pipe(
         switchMap(() => this.alimentarPedidos()),
         take(1)

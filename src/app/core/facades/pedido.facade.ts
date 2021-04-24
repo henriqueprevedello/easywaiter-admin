@@ -11,8 +11,8 @@ export class PedidoFacade {
     return this.api.adquirirNaoFinalizados();
   }
 
-  prosseguir(codigoPedido: number): Observable<void> {
-    return this.api.prosseguir(codigoPedido);
+  atualizarStatus(codigoPedido: number, codigoStatus: number): Observable<void> {
+    return this.api.atualizarStatus(codigoPedido, codigoStatus);
   }
 
   recusar(codigoPedido: number): Observable<void> {

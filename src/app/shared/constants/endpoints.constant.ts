@@ -37,7 +37,7 @@ export class EndpointsConstants {
 
   static readonly PEDIDO = {
     ADQUIRIR_NAO_FINALIZADOS: URL_CONTROLLER_PEDIDO.concat('/adquirirNaoFinalizados'),
-    PROSSEGUIR: URL_CONTROLLER_PEDIDO.concat('/prosseguir'),
+    ATUALIZAR_STATUS: URL_CONTROLLER_PEDIDO.concat('/atualizarStatus'),
     RECUSAR: URL_CONTROLLER_PEDIDO.concat('/recusar'),
   };
 

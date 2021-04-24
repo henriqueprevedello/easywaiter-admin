@@ -37,7 +37,7 @@
       <mat-list-item role="listitem">Valor: {{ formatarMoeda(comanda.valorTotal) }}</mat-list-item>
     </mat-list>
 
-    <button mat-raised-button (click)="confirmarPagamento()" color="accent" *ngIf="!comanda.dataFechamento">
+    <button mat-raised-button (click)="confirmarPagamento()" color="accent" [disabled]="!comanda.dataFechamento" *ngIf="!pedidosEmAndamento && !comanda.dataPagamento">
       <span>Pagar</span>
     </button>
   </div>

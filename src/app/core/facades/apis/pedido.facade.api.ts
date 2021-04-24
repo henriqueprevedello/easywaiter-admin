@@ -14,15 +14,21 @@ export class PedidoFacadeApi {
     );
   }
 
-  prosseguir(codigoPedido: number): Observable<void> {
-    const params = new HttpParams().set(
-      'codigoPedido',
-      codigoPedido.toString()
-    );
+  atualizarStatus(
+    codigoPedido: number,
+    codigoStatus: number
+  ): Observable<void> {
+    const params = new HttpParams()
+      .set('codigoPedido', codigoPedido.toString())
+      .set('codigoStatus', codigoStatus.toString());
 
-    return this.http.post<void>(EndpointsConstants.PEDIDO.PROSSEGUIR, null, {
-      params,
-    });
+    return this.http.post<void>(
+      EndpointsConstants.PEDIDO.ATUALIZAR_STATUS,
+      null,
+      {
+        params,
+      }
+    );
   }
 
   recusar(codigoPedido: number): Observable<void> {
