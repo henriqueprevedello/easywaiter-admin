@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
 import { PedidoFacade } from 'src/app/core/facades/pedido.facade';
+import { ObjectHelper } from 'src/app/core/helpers/object.helper';
 import { StatusPedidoService } from 'src/app/core/service/status-pedido.service';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
 import { PedidoItemDTO } from 'src/app/models/pedido-item.dto';
@@ -16,8 +16,8 @@ import { StatusPedidoEnum } from 'src/app/shared/enums/status-pedido.enum';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private intervalPedidos: NodeJS.Timeout;
-  private intervalComandas: NodeJS.Timeout;
+  private intervalPedidos;
+  private intervalComandas;
   pedidoExpandido: PedidoDTO;
   statusSelecionadoExpandido = StatusPedidoEnum.REALIZADO;
   pedidos: Array<PedidoDTO> = [];
@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.intervalPedidos);
+    clearInterval(this.intervalComandas);
   }
 
   atualizarPedidos = async () => {
@@ -63,7 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .adquirirTodas()
       .pipe(
         tap((comandasAbertas) => {
-          if (!this.equals(this.comandas, comandasAbertas)) {
+          if (!ObjectHelper.iguais(this.comandas, comandasAbertas)) {
             this.comandas = comandasAbertas;
           }
         }),
@@ -75,7 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private alimentarPedidos(): Observable<Array<PedidoDTO>> {
     return this.pedidoFacade.adquirirNaoFinalizados().pipe(
       tap((listaPedidos) => {
-        if (!this.equals(this.pedidos, listaPedidos)) {
+        if (!ObjectHelper.iguais(this.pedidos, listaPedidos)) {
           this.pedidos = listaPedidos;
         }
       }),
@@ -83,9 +84,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  private equals(obj1, obj2) {
-    return JSON.stringify(obj1) === JSON.stringify(obj2);
-  }
+
 
   adquirirCorIcone(valorBase: number, valorAtual: number): string {
     if (valorAtual > valorBase * 3) {
@@ -156,16 +155,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onExpandPedido(pedido: PedidoDTO) {
     this.pedidoExpandido = this.pedidoExpandido === pedido ? null : pedido;
 
-    if (
-      ![StatusPedidoEnum.RECUSADO, StatusPedidoEnum.CANCELADO].includes(
-        pedido.codigoStatus
-      )
-    ) {
-      this.statusSelecionadoExpandido = pedido.codigoStatus + 1;
-
+    if (this.statusPedidoService.pedidoInvalido(pedido.codigoStatus)) {
+      this.statusSelecionadoExpandido = pedido.codigoStatus;
+      
       return;
     }
+    this.statusSelecionadoExpandido = pedido.codigoStatus + 1;
 
-    this.statusSelecionadoExpandido = pedido.codigoStatus;
   }
 }

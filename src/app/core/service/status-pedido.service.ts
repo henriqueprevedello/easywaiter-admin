@@ -54,4 +54,9 @@ export class StatusPedidoService {
     codigoStatus !== StatusPedidoEnum.RECUSADO &&
     codigoStatus !== StatusPedidoEnum.ENTREGUE
   }
+
+  pedidoInvalido(codigoStatus: number){
+    return codigoStatus === StatusPedidoEnum.CANCELADO ||
+    codigoStatus === StatusPedidoEnum.RECUSADO;
+  }
 }

@@ -9,7 +9,7 @@ import { MesaDTO } from 'src/app/models/mesa.dto';
   styleUrls: ['./listagem-mesas.component.scss'],
 })
 export class ListagemMesasComponent implements OnInit {
-  displayedColumns: string[] = ['numero'];
+  displayedColumns: string[] = ['numero', 'ocupado'];
   dataSource: MatTableDataSource<MesaDTO>;
 
   constructor(private mesaFacade: MesaFacade) {}

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
+import { ObjectHelper } from 'src/app/core/helpers/object.helper';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
 
 @Component({
@@ -9,8 +10,9 @@ import { ComandaDTO } from 'src/app/models/comanda.dto';
   templateUrl: './listagem-comandas.component.html',
   styleUrls: ['./listagem-comandas.component.scss'],
 })
-export class ListagemComandasComponent implements OnInit {
-  dataSource: MatTableDataSource<ComandaDTO>;
+export class ListagemComandasComponent implements OnInit, OnDestroy {
+  private intervalComandas;
+  comandas = new MatTableDataSource<ComandaDTO>([]);
 
   displayedColumns: string[] = [
     'id',
@@ -24,33 +26,47 @@ export class ListagemComandasComponent implements OnInit {
   constructor(private comandaFacade: ComandaFacade) {}
 
   ngOnInit(): void {
+    this.adquirirTodas();
+
+    this.intervalComandas = setInterval(this.atualizarComandas, 1000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalComandas);
+  }
+
+  private atualizarComandas = async () => this.adquirirTodas();
+
+  private adquirirTodas() {
     this.comandaFacade
       .adquirirTodas()
       .pipe(
         map((comandas) => comandas.sort((a, b) => a.id - b.id).reverse()),
+        tap((comandasAbertas) => {
+          if (!ObjectHelper.iguais(this.comandas.data, comandasAbertas)) {
+            this.comandas = new MatTableDataSource(comandasAbertas);
+          }
+        }),
         take(1)
       )
-      .subscribe(
-        (todasComandas) =>
-          (this.dataSource = new MatTableDataSource(todasComandas))
-      );
+      .subscribe();
   }
 
   aplicarFiltro(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.comandas.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.comandas.paginator) {
+      this.comandas.paginator.firstPage();
     }
   }
 
-  status(comanda: ComandaDTO){
-    if(comanda.dataPagamento){
+  status(comanda: ComandaDTO) {
+    if (comanda.dataPagamento) {
       return 'Fechada';
-    } else if(comanda.dataFechamento){
+    } else if (comanda.dataFechamento) {
       return 'Em confirmação';
-    } 
+    }
 
     return 'Aberta';
   }
