@@ -7,4 +7,5 @@ export class EstabelecimentoDTO {
   estado: string;
   cidade: string;
   imagem: string;
+  chavePix: string;
 }

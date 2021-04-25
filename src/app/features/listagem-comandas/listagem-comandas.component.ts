@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
 import { ComandaDTO } from 'src/app/models/comanda.dto';
 
@@ -26,7 +26,10 @@ export class ListagemComandasComponent implements OnInit {
   ngOnInit(): void {
     this.comandaFacade
       .adquirirTodas()
-      .pipe(take(1))
+      .pipe(
+        map((comandas) => comandas.sort((a, b) => a.id - b.id).reverse()),
+        take(1)
+      )
       .subscribe(
         (todasComandas) =>
           (this.dataSource = new MatTableDataSource(todasComandas))
@@ -40,5 +43,15 @@ export class ListagemComandasComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  status(comanda: ComandaDTO){
+    if(comanda.dataPagamento){
+      return 'Fechada';
+    } else if(comanda.dataFechamento){
+      return 'Em confirmação';
+    } 
+
+    return 'Aberta';
   }
 }

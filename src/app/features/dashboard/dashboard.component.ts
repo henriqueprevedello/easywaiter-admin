@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { ComandaFacade } from 'src/app/core/facades/comanda.facade';
@@ -14,11 +15,14 @@ import { StatusPedidoEnum } from 'src/app/shared/enums/status-pedido.enum';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  private intervalPedidos: NodeJS.Timeout;
+  private intervalComandas: NodeJS.Timeout;
+  pedidoExpandido: PedidoDTO;
   statusSelecionadoExpandido = StatusPedidoEnum.REALIZADO;
-
-  dataSource: Array<PedidoDTO> = [];
+  pedidos: Array<PedidoDTO> = [];
   comandas: Array<ComandaDTO> = [];
+  botoesDesativados = false;
   columnsToDisplay = [
     'id',
     'codigoStatus',
@@ -26,9 +30,6 @@ export class DashboardComponent implements OnInit {
     'nomeCliente',
     'dataCadastro',
   ];
-  pedidoExpandido: PedidoDTO;
-
-  botoesDesativados = false;
 
   constructor(
     private pedidoFacade: PedidoFacade,
@@ -44,13 +45,46 @@ export class DashboardComponent implements OnInit {
       .subscribe();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.intervalPedidos = setInterval(this.atualizarPedidos, 1000);
+    this.intervalComandas = setInterval(this.atualizarComandas, 1000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalPedidos);
+  }
+
+  atualizarPedidos = async () => {
+    this.alimentarPedidos().pipe(take(1)).subscribe();
+  };
+
+  atualizarComandas = async () => {
+    this.comandaFacade
+      .adquirirTodas()
+      .pipe(
+        tap((comandasAbertas) => {
+          if (!this.equals(this.comandas, comandasAbertas)) {
+            this.comandas = comandasAbertas;
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
+  };
 
   private alimentarPedidos(): Observable<Array<PedidoDTO>> {
     return this.pedidoFacade.adquirirNaoFinalizados().pipe(
-      tap((listaPedidos) => (this.dataSource = listaPedidos)),
-      catchError(() => (this.dataSource = []))
+      tap((listaPedidos) => {
+        if (!this.equals(this.pedidos, listaPedidos)) {
+          this.pedidos = listaPedidos;
+        }
+      }),
+      catchError(() => (this.pedidos = []))
     );
+  }
+
+  private equals(obj1, obj2) {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
 
   adquirirCorIcone(valorBase: number, valorAtual: number): string {
@@ -75,7 +109,7 @@ export class DashboardComponent implements OnInit {
     `${pedidoItem.quantidade}x ${pedidoItem.produto.nome}`;
 
   get aguardandoConfirmacao(): number {
-    return this.dataSource.filter(
+    return this.pedidos.filter(
       (pedido) => pedido.codigoStatus === StatusPedidoEnum.REALIZADO
     ).length;
   }
@@ -87,11 +121,11 @@ export class DashboardComponent implements OnInit {
   }
 
   get pedidosEmAndamento(): number {
-    return this.dataSource.length;
+    return this.pedidos.length;
   }
 
   atualizarStatusPedido(): void {
-    this.dataSource = [];
+    this.pedidos = [];
 
     this.pedidoFacade
       .atualizarStatus(this.pedidoExpandido.id, this.statusSelecionadoExpandido)
@@ -122,7 +156,11 @@ export class DashboardComponent implements OnInit {
   onExpandPedido(pedido: PedidoDTO) {
     this.pedidoExpandido = this.pedidoExpandido === pedido ? null : pedido;
 
-    if(![StatusPedidoEnum.RECUSADO, StatusPedidoEnum.CANCELADO].includes(pedido.codigoStatus)){
+    if (
+      ![StatusPedidoEnum.RECUSADO, StatusPedidoEnum.CANCELADO].includes(
+        pedido.codigoStatus
+      )
+    ) {
       this.statusSelecionadoExpandido = pedido.codigoStatus + 1;
 
       return;

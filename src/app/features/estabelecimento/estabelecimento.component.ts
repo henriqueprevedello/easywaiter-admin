@@ -24,6 +24,7 @@ export class EstabelecimentoComponent implements OnInit {
   ]);
   descricaoControl = new FormControl();
   telefoneControl = new FormControl();
+  chavePixControl = new FormControl();
   cnpjControl = new FormControl({ value: '', disabled: true });
   estadoControl = new FormControl({ value: '', disabled: true });
   cidadeControl = new FormControl({ value: '', disabled: true });
@@ -39,6 +40,7 @@ export class EstabelecimentoComponent implements OnInit {
       nome: this.nomeControl,
       descricao: this.descricaoControl,
       numeroTelefone: this.telefoneControl,
+      chavePix: this.chavePixControl,
       cnpj: this.cnpjControl,
       estado: this.estadoControl,
       cidade: this.cidadeControl,
@@ -70,12 +72,11 @@ export class EstabelecimentoComponent implements OnInit {
   }
 
   preencherFormulario(estabelecimento: EstabelecimentoDTO): void {
-    this.options
-      .get('codigoEstabelecimento')
-      .setValue(estabelecimento.codigoEstabelecimento);
+    this.options.get('codigoEstabelecimento').setValue(estabelecimento.codigoEstabelecimento);
     this.options.get('nome').setValue(estabelecimento.nome);
     this.options.get('descricao').setValue(estabelecimento.descricao);
     this.options.get('numeroTelefone').setValue(estabelecimento.numeroTelefone);
+    this.options.get('chavePix').setValue(estabelecimento.chavePix);
     this.options.get('cnpj').setValue(estabelecimento.cnpj);
     this.options.get('estado').setValue(estabelecimento.estado);
     this.options.get('cidade').setValue(estabelecimento.cidade);

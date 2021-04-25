@@ -61,6 +61,13 @@
 
     <p>
       <mat-form-field>
+        <mat-label>Chave PIX</mat-label>
+        <input matInput placeholder="Chave PIX" [formControl]="chavePixControl" />
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
         <mat-label>CNPJ</mat-label>
         <input matInput placeholder="Cnpj" [formControl]="cnpjControl" />
       </mat-form-field>
