@@ -66,37 +66,34 @@
       </mat-form-field>
     </p>
 
-    <p>
-      <mat-form-field>
-        <mat-label>CNPJ</mat-label>
-        <input matInput placeholder="Cnpj" [formControl]="cnpjControl" />
-      </mat-form-field>
-    </p>
+    <div>
+      <div *ngIf="!imagem">
+        <input
+          id="uploadFile"
+          type="file"
+          (change)="selecionouArquivo($event)"
+          accept="image/*"
+        />
+      </div>
 
-    <p>
-      <mat-form-field>
-        <mat-label>Estado</mat-label>
-        <input matInput placeholder="Estado" [formControl]="estadoControl" />
-      </mat-form-field>
-    </p>
+      <div *ngIf="imagem">
+        <div fxLayoutAlign="space-around center">
+          <img src="{{ imagem }}" />
+        </div>
 
-    <p>
-      <mat-form-field>
-        <mat-label>Cidade</mat-label>
-        <input matInput placeholder="Cidade" [formControl]="cidadeControl" />
-      </mat-form-field>
-    </p>
-
-    <p>
-      <mat-form-field>
-        <mat-label>Imagem</mat-label>
-        <input matInput placeholder="Imagem" [formControl]="imagemControl" />
-      </mat-form-field>
-    </p>
+        <div class="remover-imagem" fxLayout="row" fxLayoutAlign="space-around center">
+          <h3 *ngIf="fileName">{{ fileName }}</h3>
+          <button mat-flat-button color="warn" (click)="removerImagem()">
+            Remover imagem
+          </button>
+        </div>
+      </div>
+      
+    </div>
   </form>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center">
+<div fxLayout="row" fxLayoutAlign="center center" class="div-salvar">
   <button
     mat-raised-button
     [disabled]="options.invalid || options.pristine"

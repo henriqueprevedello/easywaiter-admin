@@ -53,7 +53,6 @@ export class CadastroProdutoComponent implements OnInit {
       valor: this.valorControl,
       ativo: this.ativoControl,
       categoria: this.categoriaControl,
-      nomeImagem: null,
     });
   }
 

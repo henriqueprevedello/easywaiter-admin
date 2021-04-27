@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AutenticacaoService } from 'src/app/core/service/autenticacao.service';
-import { first, take } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
+import { EstabelecimentoFacade } from 'src/app/core/facades/estabelecimento.facade';
+import { EstabelecimentoStorageService } from 'src/app/core/service/storage/estabelecimento-storage.service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,6 +21,8 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private autenticacaoService: AutenticacaoService,
+    private estabelecimentoFacade: EstabelecimentoFacade,
+    private estabelecimentoStorage: EstabelecimentoStorageService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -48,9 +52,15 @@ export class LoginPageComponent implements OnInit {
     this.loading = true;
     this.autenticacaoService
       .login({ email: this.f.email.value, senha: this.f.password.value })
-      .pipe(take(1))
+      .pipe(
+        switchMap(() => this.estabelecimentoFacade.adquirirLogado()),
+        tap((estabelecimento) =>
+          this.estabelecimentoStorage.definir(estabelecimento)
+        ),
+        take(1)
+      )
       .subscribe(
-        (data) => this.router.navigate([this.returnUrl]),
+        () => this.router.navigate([this.returnUrl]),
         (error) => {
           this.error = error;
           this.loading = false;

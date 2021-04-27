@@ -1,9 +1,10 @@
 <mat-nav-list>
     <div class="profile-card" *ngIf="usuarioAtual">
-        <img src="https://revistadeguste.com/wp-content/uploads/2019/12/GV4A3152.jpg" >
+        <img src="{{ estabelecimento.imagem }}" />
         <div class="header">
             <h1>{{ usuarioAtual.nome}}</h1>
             <h4>{{ usuarioAtual.email}}</h4>
+            <p>{{ estabelecimento.cidade + ' - '+ estabelecimento.estado }}</p>
         </div>
     </div>
 
@@ -18,8 +19,5 @@
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/estabelecimento">Estabelecimento</a>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/mesas">Mesas</a>
     <a mat-list-item routerLinkActive="list-item-active" hidden routerLink="/suporte">Suporte</a>
-
-
-
 
 </mat-nav-list>
