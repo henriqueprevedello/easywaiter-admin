@@ -52,7 +52,7 @@ export class CadastroProdutoComponent implements OnInit {
       descricao: this.descricaoControl,
       valor: this.valorControl,
       ativo: this.ativoControl,
-      categoria: this.categoriaControl,
+      codigoCategoria: this.categoriaControl,
     });
   }
 
@@ -74,7 +74,7 @@ export class CadastroProdutoComponent implements OnInit {
               tap((produto) => {
                 this.options.get('id').setValue(produto.id);
                 this.options.get('ativo').setValue(produto.ativo);
-                this.options.get('categoria').setValue(produto.categoria.id);
+                this.options.get('codigoCategoria').setValue(produto.categoria.id);
                 this.options.get('descricao').setValue(produto.descricao);
                 this.options.get('nome').setValue(produto.nome);
                 this.options.get('valor').setValue(produto.valor);
@@ -108,7 +108,6 @@ export class CadastroProdutoComponent implements OnInit {
 
   cadastrar(): void {
     let produtoDTO: ProdutoDTO = this.options.value;
-    produtoDTO.categoria = { id: this.options.value.categoria, nome: null };
 
     this.arquivoFacade
       .upload(this.arquivo)
@@ -127,7 +126,6 @@ export class CadastroProdutoComponent implements OnInit {
 
   editar() {
     let produtoDTO: ProdutoDTO = this.options.value;
-    produtoDTO.categoria = { id: this.options.value.categoria, nome: null };
 
     this.arquivoFacade
       .upload(this.arquivo)

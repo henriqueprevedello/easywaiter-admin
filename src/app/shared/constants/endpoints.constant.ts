@@ -1,4 +1,4 @@
-const URL_EASY_WAITER_SERVER = 'http://localhost:3200';
+const URL_EASY_WAITER_SERVER = 'http://localhost:8080';
 
 const URL_CONTROLLER_AUTENTICACAO = `${URL_EASY_WAITER_SERVER}/autenticacao`;
 const URL_CONTROLLER_PRODUTO = `${URL_EASY_WAITER_SERVER}/produto`;
